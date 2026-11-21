@@ -74,4 +74,4 @@ Ready to experience smarter, more interactive data extraction?
 
 - **Try /extract v2:** Unlock next-level data gathering with Firecrawl and FIRE-1.
 - **Check the docs:** Learn everything you need in our [official documentation](https://docs.firecrawl.dev/features/extract#using-fire-1).
-- **Join the community:** Need help or want to share feedback? Head to our [Discord](https://discord.gg/S7Enyh9Abh) or email [help@firecrawl.com](mailto:help@firecrawl.com).
+- **Need help or feedback?** Email [help@firecrawl.com](mailto:help@firecrawl.com).

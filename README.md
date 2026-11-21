@@ -22,20 +22,6 @@
   </a>
 </div>
 
-<div>
-  <p align="center">
-    <a href="https://twitter.com/firecrawl">
-      <img src="https://img.shields.io/badge/Follow%20on%20X-000000?style=for-the-badge&logo=x&logoColor=white" alt="Follow on X" />
-    </a>
-    <a href="https://www.linkedin.com/company/104100957">
-      <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Follow on LinkedIn" />
-    </a>
-    <a href="https://discord.gg/firecrawl">
-      <img src="https://img.shields.io/badge/Join%20our%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join our Discord" />
-    </a>
-  </p>
-</div>
-
 ---
 
 # **CrawlHub**
@@ -47,12 +33,6 @@ You can run CrawlHub three ways. This repo holds the code for CrawlHub Local and
 - **[Firecrawl Local](#firecrawl-local).** Run Firecrawl on your own machine as one binary that turns websites into clean markdown, plugs into your AI agent as an MCP server and serves the Firecrawl API on localhost.
 - **[Firecrawl Cloud](#firecrawl-cloud).** Use the hosted service at [firecrawl.dev](https://firecrawl.dev/?ref=github) for everything Local does at scale with nothing to run, plus search and the 550+ data providers in [Firecrawl Alexandria](https://alexandria.firecrawl.dev) for far more knowledge than scraping alone.
 - **[Self-hosting](#self-hosting).** Deploy the full CrawlHub server from `apps/api` with its own queues, workers and databases on your own infrastructure.
-
-_Pst. Hey, you, join our stargazers :)_
-
-<a href="https://github.com/firecrawl/firecrawl">
-  <img src="https://img.shields.io/github/stars/firecrawl/firecrawl.svg?style=social&label=Star&maxAge=2592000" alt="GitHub stars">
-</a>
 
 ---
 

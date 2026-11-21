@@ -105,5 +105,4 @@ The `firecrawl_admin_path_route_requests_total` metric counts requests to the
 turning them off.
 
 Stuck? Open a
-[self-host issue template](https://github.com/firecrawl/firecrawl/issues/new?template=self_host_issue.md)
-or join the [Firecrawl Discord community](https://discord.gg/firecrawl).
+[self-host issue](https://github.com/shaan102030/CrawlHub/issues/new) on this repository.

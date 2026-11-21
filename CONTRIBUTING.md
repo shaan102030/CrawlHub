@@ -78,4 +78,4 @@ Keep credentials, local environment files, raw user data, and generated secrets 
 
 ## Get help
 
-Use [GitHub issues](https://github.com/firecrawl/firecrawl/issues) for reproducible bugs and feature discussions. For community help, join the [Firecrawl Discord](https://discord.gg/firecrawl).
+Use [GitHub issues](https://github.com/shaan102030/CrawlHub/issues) for reproducible bugs and feature discussions.
