@@ -29,6 +29,7 @@ pub mod crawler;
 #[cfg_attr(vendored_native, path = "native/document.rs")]
 pub mod document;
 
+pub mod brand;
 pub mod browser;
 pub mod cloud;
 pub mod crawl;

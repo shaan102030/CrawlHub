@@ -1,6 +1,6 @@
 ---
-name: firecrawl-build-interact
-description: Integrate Firecrawl `/interact` into product code for dynamic pages and browser actions after scraping. Use when a feature needs clicks, form fills, pagination, authentication-aware flows, or other multi-step interactions that plain `/scrape` cannot complete.
+name: crawlhub-build-interact
+description: Integrate CrawlHub `/interact` into product code for dynamic pages and browser actions after scraping. Use when a feature needs clicks, form fills, pagination, authentication-aware flows, or other multi-step interactions that plain `/scrape` cannot complete.
 license: ISC
 metadata:
   author: firecrawl
@@ -9,14 +9,14 @@ metadata:
   source: https://github.com/firecrawl/skills
 inputs:
   - name: FIRECRAWL_API_KEY
-    description: Firecrawl API key for hosted Firecrawl requests.
+    description: CrawlHub API key for hosted CrawlHub requests.
     required: true
   - name: FIRECRAWL_API_URL
-    description: Optional base URL for self-hosted Firecrawl deployments.
+    description: Optional base URL for self-hosted CrawlHub deployments.
     required: false
 ---
 
-# Firecrawl Build Interact
+# CrawlHub Build Interact
 
 Use this when `/scrape` is not enough because the feature needs to act on the page.
 
@@ -47,7 +47,7 @@ Use this when `/scrape` is not enough because the feature needs to act on the pa
 
 ## Escalation Rules
 
-- If the page can be read directly, stay on [firecrawl-build-scrape](../firecrawl-build-scrape/SKILL.md).
+- If the page can be read directly, stay on [crawlhub-build-scrape](../crawlhub-build-scrape/SKILL.md).
 
 ## Docs (Source of Truth)
 
@@ -62,6 +62,6 @@ Read the source-of-truth page for your project language before writing integrati
 
 ## See Also
 
-- [firecrawl-build](../firecrawl-build/SKILL.md)
-- [firecrawl-build-scrape](../firecrawl-build-scrape/SKILL.md)
-- [firecrawl-build-search](../firecrawl-build-search/SKILL.md)
+- [crawlhub-build](../crawlhub-build/SKILL.md)
+- [crawlhub-build-scrape](../crawlhub-build-scrape/SKILL.md)
+- [crawlhub-build-search](../crawlhub-build-search/SKILL.md)

@@ -36,7 +36,7 @@ use crate::{
 
 const JOB_TTL: Duration = Duration::from_secs(60 * 60);
 
-/// The largest body passed on to Firecrawl cloud. Local routes keep axum's
+/// The largest body passed on to hosted Firecrawl cloud. Local routes keep axum's
 /// 2 MB default; uploads to cloud routes such as /v2/parse need more.
 const FORWARD_BODY_LIMIT: usize = 64 * 1024 * 1024;
 
@@ -59,12 +59,12 @@ pub struct ServeConfig {
   /// Extra hostnames accepted in the Host header (for example a compose
   /// service name).
   pub allowed_hosts: Vec<String>,
-  /// What may be passed on to Firecrawl cloud. On by default, as it is for
+  /// What may be passed on to hosted Firecrawl cloud. On by default, as it is for
   /// the command line and the MCP launcher; `FIRECRAWL_CLOUD=off` keeps
   /// every request on the machine.
   pub cloud: Cloud,
   /// Whether a caller's own Firecrawl key is used for calls passed on to
-  /// Firecrawl cloud when this server has none. True for `serve`, where a
+  /// hosted Firecrawl cloud when this server has none. True for `serve`, where a
   /// caller may bring a key. False for the MCP launcher: its one caller is
   /// the MCP server it started, whose key is a copy of this process's own
   /// and would otherwise outlive a sign-out.
@@ -120,7 +120,7 @@ async fn gate(State(state): State<Arc<AppState>>, req: Request, next: Next) -> R
     return error_response(
       StatusCode::FORBIDDEN,
       "HOST_NOT_ALLOWED",
-      "Firecrawl Local only answers requests addressed to this machine. Start it with --allowed-host to accept another name.",
+      "CrawlHub Local only answers requests addressed to this machine. Start it with --allowed-host to accept another name.",
     );
   }
   if let Some(expected) = &state.token {
@@ -185,7 +185,7 @@ fn from_a_web_page(headers: &HeaderMap) -> bool {
   value("origin").is_some()
 }
 
-/// Why a request may not be passed on to Firecrawl cloud, if it may not.
+/// Why a request may not be passed on to hosted Firecrawl cloud, if it may not.
 ///
 /// A page open in the user's browser can send "simple" requests (a form
 /// post, an upload, a GET) to a loopback port without asking first, and a
@@ -214,7 +214,7 @@ fn forward_refusal(
           "success": false,
           "code": "CLOUD_ONLY",
           "error": format!(
-            "{path} runs on Firecrawl cloud, and FIRECRAWL_CLOUD is set so that it is not passed on. Unset FIRECRAWL_CLOUD, or set it to auto, to pass these requests on."
+            "{path} runs on hosted Firecrawl cloud, and FIRECRAWL_CLOUD is set so that it is not passed on. Unset FIRECRAWL_CLOUD, or set it to auto, to pass these requests on."
           ),
           "cloud": { "url": "https://www.firecrawl.dev", "docs": "https://docs.firecrawl.dev" }
         })),
@@ -226,13 +226,13 @@ fn forward_refusal(
     return Some(error_response(
       StatusCode::FORBIDDEN,
       "CROSS_SITE_REQUEST",
-      "Firecrawl Local does not pass requests from web pages on to Firecrawl cloud. Call it from a script, an SDK or a command-line tool.",
+      "CrawlHub Local does not pass requests from web pages on to hosted Firecrawl cloud. Call it from a script, an SDK or a command-line tool.",
     ));
   }
   None
 }
 
-/// Pass a request on to Firecrawl cloud and hand its answer back, or say
+/// Pass a request on to hosted Firecrawl cloud and hand its answer back, or say
 /// plainly why not.
 async fn pass_on(
   state: &AppState,
@@ -293,7 +293,7 @@ async fn pass_on(
 }
 
 /// Everything this engine does not serve itself. Routes under /v2 go to
-/// Firecrawl cloud: search, data providers, the agent and the rest of the
+/// hosted Firecrawl cloud: search, data providers, the agent and the rest of the
 /// API. Anything else is not an API route.
 async fn forward_handler(State(state): State<Arc<AppState>>, req: Request) -> Response {
   let (parts, body) = req.into_parts();
@@ -302,7 +302,7 @@ async fn forward_handler(State(state): State<Arc<AppState>>, req: Request) -> Re
     return error_response(
       StatusCode::NOT_FOUND,
       "NOT_FOUND",
-      "Firecrawl Local serves the Firecrawl v2 API. Use /v2/scrape, /v2/map, /v2/crawl or /v2/batch/scrape.",
+      "CrawlHub Local serves the Firecrawl v2 API. Use /v2/scrape, /v2/map, /v2/crawl or /v2/batch/scrape.",
     );
   }
   // Decide before reading the body, so a refused upload is not buffered.
@@ -316,7 +316,7 @@ async fn forward_handler(State(state): State<Arc<AppState>>, req: Request) -> Re
         StatusCode::PAYLOAD_TOO_LARGE,
         "PAYLOAD_TOO_LARGE",
         format!(
-          "The request body could not be read, or is larger than the {} MB Firecrawl Local passes on to Firecrawl cloud.",
+          "The request body could not be read, or is larger than the {} MB CrawlHub Local passes on to hosted Firecrawl cloud.",
           FORWARD_BODY_LIMIT / (1024 * 1024)
         ),
       )
@@ -632,7 +632,7 @@ async fn scrape_handler(
     Err(r) => return r,
   };
   // An Alexandria provider call. This engine has no data providers of its
-  // own, so the request goes to Firecrawl cloud as it came.
+  // own, so the request goes to hosted Firecrawl cloud as it came.
   if payload.get("alexandria").is_some() {
     return pass_on(&state, Method::POST, "/v2/scrape", &headers, body).await;
   }
@@ -654,7 +654,7 @@ async fn scrape_handler(
       )
     }
   };
-  // A page this machine cannot load is fetched by Firecrawl cloud under the
+  // A page this machine cannot load is fetched by hosted Firecrawl cloud under the
   // origin the client gave, so the call is counted as that client's.
   let cloud = match client_origin(&headers, origin.as_deref()) {
     Some(origin) => state.cloud.clone().with_origin(&origin),
@@ -713,9 +713,9 @@ pub async fn serve(engine: Arc<Engine>, cfg: ServeConfig) -> Result<(), String> 
 /// One line at startup saying what leaves the machine.
 fn cloud_notice(cloud: &Cloud) -> &'static str {
   match cloud.mode {
-    cloud::CloudMode::Off => "Firecrawl cloud is off (FIRECRAWL_CLOUD). Every request stays on this machine.",
-    cloud::CloudMode::SearchOnly => "Search is passed on to Firecrawl cloud. Everything else stays on this machine.",
-    cloud::CloudMode::Fallback => "Scrape, crawl and map run here. Search, data providers and pages this machine cannot load go to Firecrawl cloud. FIRECRAWL_CLOUD=off keeps everything local.",
+    cloud::CloudMode::Off => "hosted Firecrawl cloud is off (FIRECRAWL_CLOUD). Every request stays on this machine.",
+    cloud::CloudMode::SearchOnly => "Search is passed on to hosted Firecrawl cloud. Everything else stays on this machine.",
+    cloud::CloudMode::Fallback => "Scrape, crawl and map run here. Search, data providers and pages this machine cannot load go to hosted Firecrawl cloud. FIRECRAWL_CLOUD=off keeps everything local.",
   }
 }
 

@@ -171,7 +171,7 @@ function hostedMcpTeam(
     refuse(
       res,
       403,
-      "This endpoint is only available through the hosted Firecrawl MCP server.",
+      "This endpoint is only available through the hosted CrawlHub MCP server.",
     );
     return null;
   }

@@ -171,7 +171,7 @@ export class SiteError extends TransportableError {
   constructor(public errorCode: string) {
     const errorExplanations: Record<string, string> = {
       ERR_TUNNEL_CONNECTION_FAILED:
-        "Firecrawl encountered an internal proxy error while establishing the tunnel.",
+        "CrawlHub encountered an internal proxy error while establishing the tunnel.",
       ERR_TIMED_OUT:
         "The connection timed out. The server is not responding or is too slow.",
       ERR_BLOCKED_BY_CLIENT:
@@ -183,7 +183,7 @@ export class SiteError extends TransportableError {
       ERR_EMPTY_RESPONSE:
         "The server closed the connection without sending any response.",
       ERR_PROXY_CONNECTION_FAILED:
-        "Firecrawl encountered an internal proxy error while connecting to the proxy.",
+        "CrawlHub encountered an internal proxy error while connecting to the proxy.",
       ERR_CONNECTION_RESET:
         "The connection was reset by the peer. The server may have dropped the connection.",
       ERR_TOO_MANY_REDIRECTS:
@@ -199,7 +199,7 @@ export class SiteError extends TransportableError {
       "The website returned an error or could not be loaded properly.";
 
     const followUp = isProxyError
-      ? "This is an internal Firecrawl proxy error. Please retry or contact support."
+      ? "This is an internal CrawlHub proxy error. Please retry or contact support."
       : "Please verify the URL is correct and the website is accessible.";
 
     super(
@@ -333,7 +333,7 @@ export class UnsupportedFileError extends TransportableError {
   constructor(public reason: string) {
     super(
       "SCRAPE_UNSUPPORTED_FILE_ERROR",
-      `The URL returned a file type that Firecrawl cannot process: ${reason}. Firecrawl supports HTML web pages, PDFs, and common document formats. Raster images (PNG, JPEG, JPEG 2000, TIFF, GIF, BMP, WebP, AVIF) are OCR'd when the parsers option includes "image" (the default), where image parsing is available. Other binary files like videos, executables, archives, and other image formats are not supported. If you expected this URL to return a web page, the server may be misconfigured or returning the wrong content type.`,
+      `The URL returned a file type that CrawlHub cannot process: ${reason}. CrawlHub supports HTML web pages, PDFs, and common document formats. Raster images (PNG, JPEG, JPEG 2000, TIFF, GIF, BMP, WebP, AVIF) are OCR'd when the parsers option includes "image" (the default), where image parsing is available. Other binary files like videos, executables, archives, and other image formats are not supported. If you expected this URL to return a web page, the server may be misconfigured or returning the wrong content type.`,
     );
   }
 
@@ -377,7 +377,7 @@ export class PDFFetchProxyError extends TransportableError {
   constructor() {
     const message = isSelfHosted()
       ? "Failed to download the PDF file because the configured proxy could not establish a connection to the website (the proxy rejected the tunneling request). Check your proxy configuration (PROXY_SERVER) and whether the target site is reachable from it, then retry."
-      : "Failed to download the PDF file — Firecrawl could not establish a connection to the website while downloading it. Please retry your request, and if the issue persists, contact help@firecrawl.com with your request ID for investigation.";
+      : "Failed to download the PDF file — CrawlHub could not establish a connection to the website while downloading it. Please retry your request, and if the issue persists, contact help@firecrawl.com with your request ID for investigation.";
 
     super("SCRAPE_PDF_FETCH_PROXY_ERROR", message);
   }
@@ -460,7 +460,7 @@ export class NoCachedDataError extends TransportableError {
   constructor() {
     super(
       "SCRAPE_NO_CACHED_DATA",
-      "No cached data is available for this URL that meets your specified age requirements. This error occurs when you use the minAge parameter to request only cached data, but Firecrawl has no cached version of this URL (or no version within the specified age range). To resolve this, either remove the minAge parameter to allow a fresh scrape, or try again later after the URL has been scraped and cached.",
+      "No cached data is available for this URL that meets your specified age requirements. This error occurs when you use the minAge parameter to request only cached data, but CrawlHub has no cached version of this URL (or no version within the specified age range). To resolve this, either remove the minAge parameter to allow a fresh scrape, or try again later after the URL has been scraped and cached.",
     );
   }
 
@@ -504,7 +504,7 @@ export class ZDRViolationError extends TransportableError {
   constructor(public feature: string) {
     super(
       "SCRAPE_ZDR_VIOLATION_ERROR",
-      `The feature "${feature}" is not available when using Zero Data Retention (ZDR) mode. ZDR mode ensures that no scraped content is stored on Firecrawl servers, but this limits certain features that require data storage (such as the index engine, certain proxy modes, or advanced processing). To use this feature, you need to disable ZDR mode. Contact support@firecrawl.com if you need help.`,
+      `The feature "${feature}" is not available when using Zero Data Retention (ZDR) mode. ZDR mode ensures that no scraped content is stored on CrawlHub servers, but this limits certain features that require data storage (such as the index engine, certain proxy modes, or advanced processing). To use this feature, you need to disable ZDR mode. Contact support@firecrawl.com if you need help.`,
     );
   }
 
@@ -553,8 +553,8 @@ export class PDFOCRRequiredError extends TransportableError {
 export class PDFPrefetchFailed extends TransportableError {
   constructor() {
     const message = isSelfHosted()
-      ? "Failed to prefetch the PDF file because the website's anti-bot protection blocked the initial download attempt. This typically happens when the PDF is protected by a CAPTCHA, login wall, or aggressive bot detection. Firecrawl tried to bypass the protection but was unsuccessful. Check your server logs for more details about the specific protection mechanism encountered."
-      : "Failed to prefetch the PDF file because the website's anti-bot protection blocked the initial download attempt. This typically happens when the PDF is protected by a CAPTCHA, login wall, or aggressive bot detection. Firecrawl tried to bypass the protection but was unsuccessful. If this is a business-critical URL, please contact help@firecrawl.com with the URL and we can investigate adding specific support for this site.";
+      ? "Failed to prefetch the PDF file because the website's anti-bot protection blocked the initial download attempt. This typically happens when the PDF is protected by a CAPTCHA, login wall, or aggressive bot detection. CrawlHub tried to bypass the protection but was unsuccessful. Check your server logs for more details about the specific protection mechanism encountered."
+      : "Failed to prefetch the PDF file because the website's anti-bot protection blocked the initial download attempt. This typically happens when the PDF is protected by a CAPTCHA, login wall, or aggressive bot detection. CrawlHub tried to bypass the protection but was unsuccessful. If this is a business-critical URL, please contact help@firecrawl.com with the URL and we can investigate adding specific support for this site.";
 
     super("SCRAPE_PDF_PREFETCH_FAILED", message);
   }
@@ -599,7 +599,7 @@ export class DocumentFetchProxyError extends TransportableError {
   constructor() {
     const message = isSelfHosted()
       ? "Failed to download the document file because the configured proxy could not establish a connection to the website (the proxy rejected the tunneling request). Check your proxy configuration (PROXY_SERVER) and whether the target site is reachable from it, then retry."
-      : "Failed to download the document file — Firecrawl could not establish a connection to the website while downloading it. Please retry your request, and if the issue persists, contact help@firecrawl.com with your request ID for investigation.";
+      : "Failed to download the document file — CrawlHub could not establish a connection to the website while downloading it. Please retry your request, and if the issue persists, contact help@firecrawl.com with your request ID for investigation.";
 
     super("SCRAPE_DOCUMENT_FETCH_PROXY_ERROR", message);
   }
@@ -621,8 +621,8 @@ export class DocumentFetchProxyError extends TransportableError {
 export class DocumentPrefetchFailed extends TransportableError {
   constructor() {
     const message = isSelfHosted()
-      ? "Failed to prefetch the document file because the website's anti-bot protection blocked the initial download attempt. This typically happens when the document (DOCX, XLSX, etc.) is protected by a CAPTCHA, login wall, or aggressive bot detection. Firecrawl tried to bypass the protection but was unsuccessful. Check your server logs for more details about the specific protection mechanism encountered."
-      : "Failed to prefetch the document file because the website's anti-bot protection blocked the initial download attempt. This typically happens when the document (DOCX, XLSX, etc.) is protected by a CAPTCHA, login wall, or aggressive bot detection. Firecrawl tried to bypass the protection but was unsuccessful. If this is a business-critical URL, please contact help@firecrawl.com with the URL and we can investigate adding specific support for this site.";
+      ? "Failed to prefetch the document file because the website's anti-bot protection blocked the initial download attempt. This typically happens when the document (DOCX, XLSX, etc.) is protected by a CAPTCHA, login wall, or aggressive bot detection. CrawlHub tried to bypass the protection but was unsuccessful. Check your server logs for more details about the specific protection mechanism encountered."
+      : "Failed to prefetch the document file because the website's anti-bot protection blocked the initial download attempt. This typically happens when the document (DOCX, XLSX, etc.) is protected by a CAPTCHA, login wall, or aggressive bot detection. CrawlHub tried to bypass the protection but was unsuccessful. If this is a business-critical URL, please contact help@firecrawl.com with the URL and we can investigate adding specific support for this site.";
 
     super("SCRAPE_DOCUMENT_PREFETCH_FAILED", message);
   }
@@ -645,7 +645,7 @@ export class AgentIndexOnlyError extends TransportableError {
   constructor() {
     super(
       "AGENT_INDEX_ONLY",
-      "This page is not available in Firecrawl's index. Your API key was provisioned by an agent and the account has not yet been confirmed by the account holder. Until the account is confirmed, only pages already in Firecrawl's index can be served. Please ask the account holder to check their email and confirm the account to unlock full scraping capabilities, or visit https://firecrawl.dev/signin to claim the account.",
+      "This page is not available in CrawlHub's index. Your API key was provisioned by an agent and the account has not yet been confirmed by the account holder. Until the account is confirmed, only pages already in CrawlHub's index can be served. Please ask the account holder to check their email and confirm the account to unlock full scraping capabilities, or visit https://firecrawl.dev/signin to claim the account.",
     );
   }
 

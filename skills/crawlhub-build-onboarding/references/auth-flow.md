@@ -1,6 +1,6 @@
 # Auth Flow
 
-Use this browser flow when the user does not already have a Firecrawl API key.
+Use this browser flow when the user does not already have a CrawlHub API key.
 
 ## Step 1: Generate auth parameters
 

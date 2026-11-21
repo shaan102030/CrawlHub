@@ -1,4 +1,4 @@
-# Deploy Firecrawl with Kubernetes manifests
+# Deploy CrawlHub with Kubernetes manifests
 
 Use these manifests when you want to inspect and adapt each Kubernetes resource directly. They are a source-aligned starting point, not a production architecture or a supported replacement for making your own security, persistence, availability, and upgrade decisions.
 
@@ -8,7 +8,7 @@ Use these manifests when you want to inspect and adapt each Kubernetes resource 
 ## Choose this path when
 
 - **Use these manifests** when you want direct control over each Deployment, Service, ConfigMap, and Secret.
-- **Use the [Helm chart](../firecrawl-helm/)** when you want a values-driven render and upgrade workflow.
+- **Use the [Helm chart](../crawlhub-helm/)** when you want a values-driven render and upgrade workflow.
 - **Use the [Docker Compose self-hosting guide](https://docs.firecrawl.dev/contributing/self-host)** when you are still proving the first scrape and do not need Kubernetes yet.
 
 ## Review the deployment decisions

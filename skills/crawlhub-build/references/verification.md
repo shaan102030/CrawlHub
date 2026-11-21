@@ -1,6 +1,6 @@
 # Verification
 
-Do not stop at "the code compiles." Verify that a real Firecrawl request works.
+Do not stop at "the code compiles." Verify that a real CrawlHub request works.
 
 ## Fresh Project Smoke Test
 
@@ -14,9 +14,9 @@ Use the smallest request that proves auth, networking, and SDK wiring work:
 
 Verify the integration in the actual place where it will run:
 
-- start the app, worker, or script that owns the Firecrawl call
+- start the app, worker, or script that owns the CrawlHub call
 - trigger one request through the real integration path
-- confirm the Firecrawl response is received and handled correctly
+- confirm the CrawlHub response is received and handled correctly
 - confirm secrets are being read from the intended env source
 
 ## What Counts As Done

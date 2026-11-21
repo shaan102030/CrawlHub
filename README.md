@@ -22,49 +22,29 @@
   </a>
 </div>
 
-<div>
-  <p align="center">
-    <a href="https://twitter.com/firecrawl">
-      <img src="https://img.shields.io/badge/Follow%20on%20X-000000?style=for-the-badge&logo=x&logoColor=white" alt="Follow on X" />
-    </a>
-    <a href="https://www.linkedin.com/company/104100957">
-      <img src="https://img.shields.io/badge/Follow%20on%20LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Follow on LinkedIn" />
-    </a>
-    <a href="https://discord.gg/firecrawl">
-      <img src="https://img.shields.io/badge/Join%20our%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Join our Discord" />
-    </a>
-  </p>
-</div>
-
 ---
 
 # **CrawlHub**
 
 **Self-hosted knowledge infrastructure for your agents.** CrawlHub is a fork of [Firecrawl](https://github.com/firecrawl/firecrawl) (AGPL-3.0). See [BRANDING.md](./BRANDING.md) for what is rebranded versus what stays compatible with the upstream Firecrawl ecosystem (package names, `FIRECRAWL_*` env vars, and SDKs).
 
-You can run CrawlHub three ways. This repo holds the code for Firecrawl Local and the self-hosted server, along with SDKs that work with all three.
+You can run CrawlHub three ways. This repo holds the code for CrawlHub Local and the self-hosted server, along with SDKs that work with all three.
 
 - **[Firecrawl Local](#firecrawl-local).** Run Firecrawl on your own machine as one binary that turns websites into clean markdown, plugs into your AI agent as an MCP server and serves the Firecrawl API on localhost.
 - **[Firecrawl Cloud](#firecrawl-cloud).** Use the hosted service at [firecrawl.dev](https://firecrawl.dev/?ref=github) for everything Local does at scale with nothing to run, plus search and the 550+ data providers in [Firecrawl Alexandria](https://alexandria.firecrawl.dev) for far more knowledge than scraping alone.
-- **[Self-hosting](#self-hosting).** Deploy the full Firecrawl server from `apps/api` with its own queues, workers and databases on your own infrastructure.
-
-_Pst. Hey, you, join our stargazers :)_
-
-<a href="https://github.com/firecrawl/firecrawl">
-  <img src="https://img.shields.io/github/stars/firecrawl/firecrawl.svg?style=social&label=Star&maxAge=2592000" alt="GitHub stars">
-</a>
+- **[Self-hosting](#self-hosting).** Deploy the full CrawlHub server from `apps/api` with its own queues, workers and databases on your own infrastructure.
 
 ---
 
-## Firecrawl Local
+## CrawlHub Local
 
-[Firecrawl Local](apps/local) scrapes, crawls and maps from your own machine without a database, queue or container, and it reaches Firecrawl Cloud when your AI agents need search or Alexandria. It installs from crates.io. You need Rust and a C compiler, which on macOS means `xcode-select --install` and on Debian or Ubuntu means `build-essential`.
+[CrawlHub Local](apps/local) scrapes, crawls and maps from your own machine without a database, queue or container, and it reaches CrawlHub Cloud when your AI agents need search or Alexandria. It installs from crates.io. You need Rust and a C compiler, which on macOS means `xcode-select --install` and on Debian or Ubuntu means `build-essential`.
 
 ```bash
 cargo install firecrawl-local
 ```
 
-If you don't have Rust, [Firecrawl Cloud](#firecrawl-cloud) runs the same scrape with nothing to build and no signup.
+If you don't have Rust, [CrawlHub Cloud](#firecrawl-cloud) runs the same scrape with nothing to build and no signup.
 
 ```bash
 npx -y firecrawl-cli@latest scrape https://firecrawl.dev
@@ -92,43 +72,43 @@ Pages that need JavaScript render in the Chrome or Chromium already on your mach
 
 ### Add it to your AI agent
 
-`init` finds Claude Code, Claude Desktop, Cursor, Windsurf, Gemini CLI and Codex on your machine and adds Firecrawl Local to each one as an MCP server. It backs up every config file first, and the MCP server itself needs Node.js 22 or newer.
+`init` finds Claude Code, Claude Desktop, Cursor, Windsurf, Gemini CLI and Codex on your machine and adds CrawlHub Local to each one as an MCP server. It backs up every config file first, and the MCP server itself needs Node.js 22 or newer.
 
 ```bash
 firecrawl-local init
 ```
 
-Restart your AI tool afterwards. Its scrape, crawl, map and batch scrape tools run on your machine, and the other Firecrawl tools go to Firecrawl Cloud.
+Restart your AI tool afterwards. Its scrape, crawl, map and batch scrape tools run on your machine, and the other CrawlHub tools go to CrawlHub Cloud.
 
-### Run the Firecrawl API on localhost
+### Run the CrawlHub API on localhost
 
-`serve` answers the Firecrawl v2 API on port 3002, so code written for Firecrawl runs against it unchanged and local routes need no API key.
+`serve` answers the CrawlHub v2 API on port 3002, so code written for CrawlHub runs against it unchanged and local routes need no API key.
 
 ```bash
 firecrawl-local serve
 ```
 
-Point any Firecrawl SDK at it by setting the API URL.
+Point any CrawlHub SDK at it by setting the API URL.
 
 ```python
-from firecrawl import Firecrawl
+from firecrawl import CrawlHub
 
-app = Firecrawl(api_url="http://localhost:3002")
+app = CrawlHub(api_url="http://localhost:3002")
 print(app.scrape("https://firecrawl.dev").markdown)
 ```
 
-The [Firecrawl Local README](apps/local) covers every command and option, the security defaults for `serve` and running it in Docker. Move to [Firecrawl Cloud](#firecrawl-cloud) when you need structured JSON, Interact, the Agent or scale beyond one machine.
+The [CrawlHub Local README](apps/local) covers every command and option, the security defaults for `serve` and running it in Docker. Move to [CrawlHub Cloud](#firecrawl-cloud) when you need structured JSON, Interact, the Agent or scale beyond one machine.
 
 ---
 
 ## What runs where
 
-| Feature | Firecrawl Local | Firecrawl Cloud |
+| Feature | CrawlHub Local | CrawlHub Cloud |
 |---------|-----------------|-----------------|
 | [Scrape](#scrape) | Markdown, HTML, raw HTML and links | Adds structured JSON, summaries, screenshots and browser actions |
 | [Crawl](#crawl), [Map](#map) and [Batch Scrape](#batch-scrape) | ✅ | ✅ |
 | PDFs and Office documents | ✅ | ✅, plus [Parse](https://docs.firecrawl.dev/features/parse) for uploaded files |
-| [Search](#search) | Through Firecrawl Cloud, no account needed | ✅ |
+| [Search](#search) | Through CrawlHub Cloud, no account needed | ✅ |
 | [Alexandria](#alexandria) | Through Firecrawl Cloud after `firecrawl-local login` | ✅ |
 | [Interact](#interact), [Agent](#agent) and [Monitor](https://docs.firecrawl.dev/features/monitoring) | | ✅ |
 
@@ -136,9 +116,9 @@ Scraping, crawling and mapping run on your machine. By default a single-page scr
 
 ---
 
-## Firecrawl Cloud
+## CrawlHub Cloud
 
-Firecrawl Cloud runs everything Firecrawl Local does at scale, with no browser or machine of your own to look after. It also gives your AI agents access to far more knowledge than scraping alone, with search, Alexandria, Interact and Agent all through a single API.
+CrawlHub Cloud runs everything CrawlHub Local does at scale, with no browser or machine of your own to look after. It also gives your AI agents access to far more knowledge than scraping alone, with search, Alexandria, Interact and Agent all through a single API.
 
 - **Works on the real web.** Covers 96% of the web, including JS-heavy pages and dynamic apps ([see benchmarks](https://www.firecrawl.dev/blog/the-worlds-best-web-data-api-v25)).
 - **Fast.** P95 latency of 3.4s across millions of pages, built for real-time AI agents and dynamic apps.
@@ -151,9 +131,9 @@ Firecrawl Cloud runs everything Firecrawl Local does at scale, with no browser o
 Search the web and get full content from results.
 
 ```python
-from firecrawl import Firecrawl
+from firecrawl import CrawlHub
 
-app = Firecrawl(api_key="fc-YOUR_API_KEY")
+app = CrawlHub(api_key="fc-YOUR_API_KEY")
 
 search_result = app.search("firecrawl", limit=5)
 ```
@@ -163,9 +143,9 @@ search_result = app.search("firecrawl", limit=5)
 
 **Node.js**
 ```javascript
-import { Firecrawl } from 'firecrawl';
+import { CrawlHub } from 'firecrawl';
 
-const app = new Firecrawl({apiKey: "fc-YOUR_API_KEY"});
+const app = new CrawlHub({apiKey: "fc-YOUR_API_KEY"});
 
 app.search("firecrawl", { limit: 5 })
 ```
@@ -191,12 +171,12 @@ firecrawl search "firecrawl" --limit 5
 [
   {
     "url": "https://firecrawl.dev",
-    "title": "Firecrawl",
+    "title": "CrawlHub",
     "markdown": "Turn websites into..."
   },
   {
     "url": "https://docs.firecrawl.dev",
-    "title": "Firecrawl Docs",
+    "title": "CrawlHub Docs",
     "markdown": "# Getting Started..."
   }
 ]
@@ -207,9 +187,9 @@ firecrawl search "firecrawl" --limit 5
 Get LLM-ready context from any website as markdown, JSON, screenshots and more.
 
 ```python
-from firecrawl import Firecrawl
+from firecrawl import CrawlHub
 
-app = Firecrawl(api_key="fc-YOUR_API_KEY")
+app = CrawlHub(api_key="fc-YOUR_API_KEY")
 
 result = app.scrape('firecrawl.dev')
 ```
@@ -219,9 +199,9 @@ result = app.scrape('firecrawl.dev')
 
 **Node.js**
 ```javascript
-import { Firecrawl } from 'firecrawl';
+import { CrawlHub } from 'firecrawl';
 
-const app = new Firecrawl({ apiKey: "fc-YOUR_API_KEY" });
+const app = new CrawlHub({ apiKey: "fc-YOUR_API_KEY" });
 
 app.scrape('firecrawl.dev')
 ```
@@ -244,9 +224,9 @@ firecrawl https://firecrawl.dev --only-main-content
 </details>
 
 ```
-# Firecrawl
+# CrawlHub
 
-Firecrawl helps AI agents search, scrape, and interact with the web.
+CrawlHub helps AI agents search, scrape, and interact with the web.
 
 ## Features
 - Search: Find information across the web
@@ -260,9 +240,9 @@ Firecrawl helps AI agents search, scrape, and interact with the web.
 Scrape a page, then interact with it using AI prompts or code.
 
 ```python
-from firecrawl import Firecrawl
+from firecrawl import CrawlHub
 
-app = Firecrawl(api_key="fc-YOUR_API_KEY")
+app = CrawlHub(api_key="fc-YOUR_API_KEY")
 
 result = app.scrape("https://amazon.com")
 scrape_id = result.metadata.scrape_id
@@ -276,9 +256,9 @@ app.interact(scrape_id, prompt="Click the first result")
 
 **Node.js**
 ```javascript
-import { Firecrawl } from 'firecrawl';
+import { CrawlHub } from 'firecrawl';
 
-const app = new Firecrawl({apiKey: "fc-YOUR_API_KEY"});
+const app = new CrawlHub({apiKey: "fc-YOUR_API_KEY"});
 
 const result = await app.scrape("https://amazon.com");
 
@@ -347,11 +327,11 @@ curl -X POST 'https://api.firecrawl.dev/v2/agent' \
 Pass a schema to get structured data back.
 
 ```python
-from firecrawl import Firecrawl
+from firecrawl import CrawlHub
 from pydantic import BaseModel, Field
 from typing import List, Optional
 
-app = Firecrawl(api_key="fc-YOUR_API_KEY")
+app = CrawlHub(api_key="fc-YOUR_API_KEY")
 
 class Founder(BaseModel):
     name: str = Field(description="Full name of the founder")
@@ -361,7 +341,7 @@ class FoundersSchema(BaseModel):
     founders: List[Founder] = Field(description="List of founders")
 
 result = app.agent(
-    prompt="Find the founders of Firecrawl",
+    prompt="Find the founders of CrawlHub",
     schema=FoundersSchema
 )
 
@@ -402,9 +382,9 @@ It returns a job ID, and the [SDKs](#sdks) poll it for you until the crawl finis
 Discover all URLs on a website instantly.
 
 ```python
-from firecrawl import Firecrawl
+from firecrawl import CrawlHub
 
-app = Firecrawl(api_key="fc-YOUR_API_KEY")
+app = CrawlHub(api_key="fc-YOUR_API_KEY")
 
 result = app.map("https://firecrawl.dev", search="pricing")
 # Returns URLs ordered by relevance to "pricing"
@@ -415,9 +395,9 @@ result = app.map("https://firecrawl.dev", search="pricing")
 Scrape many URLs at once.
 
 ```python
-from firecrawl import Firecrawl
+from firecrawl import CrawlHub
 
-app = Firecrawl(api_key="fc-YOUR_API_KEY")
+app = CrawlHub(api_key="fc-YOUR_API_KEY")
 
 job = app.batch_scrape([
     "https://firecrawl.dev",
@@ -437,7 +417,7 @@ Install it in your AI agent from [alexandria.firecrawl.dev](https://alexandria.f
 
 ### Connect your AI agent
 
-The Firecrawl CLI gives your AI agent every Cloud tool with one command. It works with [Claude Code](https://claude.ai/code), [Antigravity](https://antigravity.google), [OpenCode](https://opencode.ai) and more, so restart your agent after installing.
+The CrawlHub CLI gives your AI agent every Cloud tool with one command. It works with [Claude Code](https://claude.ai/code), [Antigravity](https://antigravity.google), [OpenCode](https://opencode.ai) and more, so restart your agent after installing.
 
 ```bash
 npx -y firecrawl-cli@latest init --all --browser
@@ -469,7 +449,7 @@ See the [Skill and CLI documentation](https://docs.firecrawl.dev/sdks/cli) for e
 
 ### SDKs
 
-The SDKs cover every Firecrawl feature and poll async jobs for you. They work with Firecrawl Cloud, and with Firecrawl Local once you set the API URL to `http://localhost:3002`.
+The SDKs cover every CrawlHub feature and poll async jobs for you. They work with CrawlHub Cloud, and with CrawlHub Local once you set the API URL to `http://localhost:3002`.
 
 #### Python
 
@@ -478,9 +458,9 @@ pip install firecrawl
 ```
 
 ```python
-from firecrawl import Firecrawl
+from firecrawl import CrawlHub
 
-app = Firecrawl(api_key="fc-YOUR_API_KEY")
+app = CrawlHub(api_key="fc-YOUR_API_KEY")
 
 # Scrape a single URL
 doc = app.scrape("https://firecrawl.dev", formats=["markdown"])
@@ -507,9 +487,9 @@ npm install firecrawl
 ```
 
 ```javascript
-import { Firecrawl } from 'firecrawl';
+import { CrawlHub } from 'firecrawl';
 
-const app = new Firecrawl({ apiKey: 'fc-YOUR_API_KEY' });
+const app = new CrawlHub({ apiKey: 'fc-YOUR_API_KEY' });
 
 // Scrape a single URL
 const doc = await app.scrape('https://firecrawl.dev', { formats: ['markdown'] });
@@ -579,7 +559,7 @@ The build skills for integrating Firecrawl into product code live in this repo u
 
 The server runs with Docker Compose alongside Redis, PostgreSQL and a browser service, and the [self-hosting guide](https://docs.firecrawl.dev/contributing/self-host) takes you from checkout to your first scrape.
 
-[SELF_HOST.md](SELF_HOST.md) lists the services and settings for the revision you checked out, and larger deployments can start from the [Kubernetes manifests](examples/kubernetes/cluster-install) or the [Helm chart](examples/kubernetes/firecrawl-helm). Alexandria runs on Firecrawl Cloud, so the self-hosted server does not include it.
+[SELF_HOST.md](SELF_HOST.md) lists the services and settings for the revision you checked out, and larger deployments can start from the [Kubernetes manifests](examples/kubernetes/cluster-install) or the [Helm chart](examples/kubernetes/crawlhub-helm). Alexandria runs on Firecrawl Cloud, so the self-hosted server does not include it.
 
 ---
 
@@ -601,7 +581,7 @@ This project is primarily licensed under the GNU Affero General Public License v
 
 ---
 
-**It is the sole responsibility of end users to respect websites' policies when scraping.** Users are advised to adhere to applicable privacy policies and terms of use. By default, Firecrawl respects robots.txt directives. By using Firecrawl, you agree to comply with these conditions.
+**It is the sole responsibility of end users to respect websites' policies when scraping.** Users are advised to adhere to applicable privacy policies and terms of use. By default, CrawlHub respects robots.txt directives. By using CrawlHub, you agree to comply with these conditions.
 
 <p align="right" style="font-size: 14px; color: #555; margin-top: 20px;">
   <a href="#readme-top" style="text-decoration: none; color: #007bff; font-weight: bold;">

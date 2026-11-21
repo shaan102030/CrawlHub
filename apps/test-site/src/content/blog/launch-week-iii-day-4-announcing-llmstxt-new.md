@@ -33,4 +33,4 @@ Whether you’re prepping datasets, building LLM apps, or feeding prompts — th
 ## Try it Now
 
 - **Get started:** [llmstxt.new](https://llmstxt.new)
-- **Need help?** Join the [Discord](https://discord.gg/S7Enyh9Abh) or reach out via [help@firecrawl.com](mailto:help@firecrawl.com)
+- **Need help?** Reach out via [help@firecrawl.com](mailto:help@firecrawl.com)

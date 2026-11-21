@@ -1,3 +1,4 @@
+import { resolveApiKeyFromEnv, resolveApiUrlFromEnv } from "../env";
 import { HttpClient } from "./utils/httpClient";
 import {
   scrape, type ScrapeCallOptions,
@@ -129,9 +130,9 @@ type InferredJsonFromOptions<Opts> = Opts extends { formats?: infer Fmts }
  * Configuration for the v2 client transport.
  */
 export interface FirecrawlClientOptions {
-  /** API key (falls back to FIRECRAWL_API_KEY). */
+  /** API key (falls back to CRAWLHUB_API_KEY or FIRECRAWL_API_KEY). */
   apiKey?: string | null;
-  /** API base URL (falls back to FIRECRAWL_API_URL or https://api.firecrawl.dev). */
+  /** API base URL (falls back to CRAWLHUB_API_URL, FIRECRAWL_API_URL, or https://api.firecrawl.dev). */
   apiUrl?: string | null;
   /** Per-request timeout in milliseconds (optional). */
   timeoutMs?: number;
@@ -171,8 +172,8 @@ export class FirecrawlClient {
       typeof options === "string" ? { apiKey: options } : options;
 
     const hasEnv = typeof process !== "undefined" && !!process.env;
-    const apiKey = (opts.apiKey ?? (hasEnv ? process.env.FIRECRAWL_API_KEY : undefined) ?? "").trim();
-    const apiUrl = (opts.apiUrl ?? (hasEnv ? process.env.FIRECRAWL_API_URL : undefined) ?? "https://api.firecrawl.dev").replace(/\/$/, "");
+    const apiKey = (opts.apiKey ?? (hasEnv ? resolveApiKeyFromEnv(process.env) : undefined) ?? "").trim();
+    const apiUrl = (opts.apiUrl ?? (hasEnv ? resolveApiUrlFromEnv(process.env) : undefined) ?? "https://api.firecrawl.dev").replace(/\/$/, "");
 
     // No API key is allowed: scrape, search, and interact fall back to the
     // keyless free tier (rate-limited per IP). Other methods will return 401

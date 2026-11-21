@@ -236,7 +236,7 @@ export async function slackCommandsController(req: Request, res: Response) {
     if (!installation) {
       return {
         response_type: "ephemeral",
-        text: `This workspace isn't linked to Firecrawl yet. Connect it from the dashboard: ${config.FIRECRAWL_DASHBOARD_URL}/app/monitoring`,
+        text: `This workspace isn't linked to CrawlHub yet. Connect it from the dashboard: ${config.FIRECRAWL_DASHBOARD_URL}/app/monitoring`,
       };
     }
 

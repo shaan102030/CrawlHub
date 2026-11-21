@@ -21,7 +21,7 @@ import {
 
 const logger = _logger.child({ module: "monitoring-email" });
 
-const FROM_ADDRESS = "Firecrawl <notifications@notifications.firecrawl.dev>";
+const FROM_ADDRESS = "CrawlHub <notifications@notifications.firecrawl.dev>";
 const REPLY_TO_ADDRESS = "help@firecrawl.com";
 // Monitors created after email opt-in shipped always have recipient rows.
 const EMAIL_OPT_IN_CUTOFF = Date.parse("2026-06-01T00:00:00Z");
@@ -49,7 +49,7 @@ const DIFF_MAX_CHARS_PER_LINE = 200;
 
 function userFacingPageError(error?: string | null): string | null {
   if (!error) return null;
-  return "Firecrawl could not check this page. Open the dashboard for details.";
+  return "CrawlHub could not check this page. Open the dashboard for details.";
 }
 
 function renderDiffBlock(diffText: string): string {
@@ -204,7 +204,7 @@ function buildUnsubscribeFooter(unsubscribeUrl: string): string {
   const safe = escapeHtml(unsubscribeUrl);
   return `<hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0 12px;" />
 <p style="color:#6b7280;font-size:12px;line-height:1.6;margin:0;">
-You're receiving this because you opted in to Firecrawl monitor alerts at this address.
+You're receiving this because you opted in to CrawlHub monitor alerts at this address.
 <a href="${safe}" style="color:#6b7280;text-decoration:underline;">Unsubscribe from this monitor</a>.
 </p>`;
 }
@@ -262,7 +262,7 @@ export function buildHtml(payload: MonitoringEmailPayload): string {
   });
 
   return `Hey there,<br/>
-<p>Your Firecrawl monitor <strong>${escapeHtml(payload.monitorName)}</strong> detected activity.</p>
+<p>Your CrawlHub monitor <strong>${escapeHtml(payload.monitorName)}</strong> detected activity.</p>
 <ul>
   <li>${changedLine}</li>
   <li>New: ${payload.summary.new}</li>
@@ -274,7 +274,7 @@ ${pageItems ? `<p>Top pages:</p><ul>${pageItems}</ul>` : ""}
 <p><a href="${dashboardUrl}">View this check in the dashboard</a></p>
 <p>Check ID: <code>${escapeHtml(payload.checkId)}</code></p>
 <p>Credits used: ${payload.creditsUsed ?? "unknown"}</p>
-<br/>Thanks,<br/>Firecrawl Team<br/>
+<br/>Thanks,<br/>CrawlHub Team<br/>
 ${payload.unsubscribeUrl ? buildUnsubscribeFooter(payload.unsubscribeUrl) : ""}`;
 }
 
@@ -290,7 +290,7 @@ export function buildConfirmationHtml(params: {
   const unsubscribeUrl = escapeHtml(params.unsubscribeUrl);
 
   return `Hey there,<br/>
-<p>A Firecrawl user added <strong>${recipientEmail}</strong> as a notification recipient for the monitor <strong>${monitorName}</strong>.</p>
+<p>A CrawlHub user added <strong>${recipientEmail}</strong> as a notification recipient for the monitor <strong>${monitorName}</strong>.</p>
 <p>If you'd like to receive change-detection emails for this monitor, please confirm:</p>
 <p style="margin:24px 0;">
   <a href="${confirmUrl}"
@@ -306,7 +306,7 @@ export function buildConfirmationHtml(params: {
   You will not receive any monitor notifications at this address until you click the link above. If you didn't expect this email you can safely ignore it, or
   <a href="${unsubscribeUrl}" style="color:#6b7280;text-decoration:underline;">block all future emails from this monitor</a>.
 </p>
-<br/>Thanks,<br/>Firecrawl Team<br/>`;
+<br/>Thanks,<br/>CrawlHub Team<br/>`;
 }
 
 function getResendClient(): Resend | null {
@@ -342,7 +342,7 @@ export async function sendMonitoringConfirmationEmail(params: {
       from: FROM_ADDRESS,
       to: params.recipient.email,
       replyTo: REPLY_TO_ADDRESS,
-      subject: `Confirm subscription: Firecrawl monitor "${params.monitorName}"`,
+      subject: `Confirm subscription: CrawlHub monitor "${params.monitorName}"`,
       html,
     });
 

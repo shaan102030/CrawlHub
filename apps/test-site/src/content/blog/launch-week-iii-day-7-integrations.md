@@ -27,7 +27,6 @@ These integrations help you automate research, enrich data pipelines, and bring 
 
 - **Explore integrations:** [Browse the full list on the dashboard](https://www.firecrawl.dev/app)
 - **Check the docs:** Step-by-step guides for each integration.
-- **Join the community:** Share your workflows and get help in [Discord](https://discord.gg/S7Enyh9Abh)
 
 This is just the beginning. More integrations are on the way — and if there’s something specific you need, let us know.
 

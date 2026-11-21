@@ -2,7 +2,7 @@
 name = "firecrawl-local"
 version = "0.1.1"
 edition = "2021"
-description = "Firecrawl Local: scrape, crawl and map on your own machine from one binary, with a hand-off to Firecrawl cloud."
+description = "CrawlHub Local: scrape, crawl and map on your own machine from one binary, with optional hand-off to hosted Firecrawl cloud."
 license = "AGPL-3.0"
 repository = "https://github.com/firecrawl/firecrawl"
 homepage = "https://www.firecrawl.dev"
@@ -16,6 +16,10 @@ include = ["src/**/*", "build.rs", "README.md"]
 [lib]
 name = "firecrawl_local"
 path = "src/lib.rs"
+
+[[bin]]
+name = "crawlhub-local"
+path = "src/main.rs"
 
 [[bin]]
 name = "firecrawl-local"

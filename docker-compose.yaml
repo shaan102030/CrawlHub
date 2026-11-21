@@ -1,4 +1,4 @@
-name: firecrawl
+name: crawlhub
 
 x-common-service: &common-service
   # NOTE: If you don't want to build the service locally,

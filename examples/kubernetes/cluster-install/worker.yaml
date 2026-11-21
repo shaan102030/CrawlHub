@@ -28,9 +28,9 @@ spec:
               value: "3005"
           envFrom:
             - configMapRef:
-                name: firecrawl-config
+                name: crawlhub-config
             - secretRef:
-                name: firecrawl-secret
+                name: crawlhub-secret
           resources:
             requests:
               memory: "3G"

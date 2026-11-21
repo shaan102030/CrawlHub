@@ -6,6 +6,8 @@ This module provides the main client class that orchestrates all v2 functionalit
 
 import os
 from pathlib import Path
+
+from ..env import env_api_key
 from typing import Optional, List, Dict, Any, Callable, Union, Literal, BinaryIO
 from .types import (
     ClientConfig,
@@ -146,7 +148,7 @@ class FirecrawlClient:
                 keep the plain default)
         """
         if api_key is None:
-            api_key = os.getenv("FIRECRAWL_API_KEY")
+            api_key = env_api_key()
 
         # No API key is allowed: scrape, search, and interact fall back to the
         # keyless free tier (rate-limited per IP). The HTTP client only sends an

@@ -1,6 +1,6 @@
 # Contributing to CrawlHub
 
-This repository is a fork of Firecrawl. Thanks for helping make CrawlHub better. Keep each change focused, prove the behavior you changed, and make the pull request easy to review.
+This repository is a fork of CrawlHub. Thanks for helping make CrawlHub better. Keep each change focused, prove the behavior you changed, and make the pull request easy to review.
 
 ## Choose the right workflow
 
@@ -24,7 +24,7 @@ pnpm install
 pnpm start
 ```
 
-`pnpm start` builds Firecrawl and launches the API, workers, and local dependency containers. Keep Redis running separately as described in the public guide.
+`pnpm start` builds CrawlHub and launches the API, workers, and local dependency containers. Keep Redis running separately as described in the public guide.
 
 ## Make a focused change
 
@@ -78,4 +78,4 @@ Keep credentials, local environment files, raw user data, and generated secrets 
 
 ## Get help
 
-Use [GitHub issues](https://github.com/firecrawl/firecrawl/issues) for reproducible bugs and feature discussions. For community help, join the [Firecrawl Discord](https://discord.gg/firecrawl).
+Use [GitHub issues](https://github.com/shaan102030/CrawlHub/issues) for reproducible bugs and feature discussions.

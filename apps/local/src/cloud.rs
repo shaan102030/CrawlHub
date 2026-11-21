@@ -1,4 +1,4 @@
-//! Hand-off to Firecrawl cloud for what a laptop cannot do: web search, pages
+//! Hand-off to hosted Firecrawl cloud for what a laptop cannot do: web search, pages
 //! that block a local fetch, and Alexandria data providers.
 //!
 //! Nothing here runs unless the caller asks for search or the cloud setting
@@ -13,7 +13,7 @@ pub const DEFAULT_API_URL: &str = "https://api.firecrawl.dev";
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CloudMode {
-  /// Never contact Firecrawl cloud.
+  /// Never contact hosted Firecrawl cloud.
   Off,
   /// Search goes to the cloud; scrapes stay local.
   SearchOnly,
@@ -58,7 +58,7 @@ fn warn_unknown_mode(raw: &str) {
   static ONCE: std::sync::Once = std::sync::Once::new();
   ONCE.call_once(|| {
     eprintln!(
-      "FIRECRAWL_CLOUD={raw} is not a setting Firecrawl Local knows (off, search or auto). The cloud stays off."
+      "FIRECRAWL_CLOUD={raw} is not a setting CrawlHub Local knows (off, search or auto). The cloud stays off."
     );
   });
 }
@@ -81,9 +81,9 @@ pub struct Cloud {
   saved_login: bool,
 }
 
-pub const SIGN_IN_HINT: &str = "Run `firecrawl-local login`, or set FIRECRAWL_API_KEY.";
+pub use crate::brand::SIGN_IN_HINT;
 
-/// Reword a refusal Firecrawl cloud sent to a caller with no key, so it says
+/// Reword a refusal hosted Firecrawl cloud sent to a caller with no key, so it says
 /// what to do on this machine. The cloud writes these for people calling the
 /// API directly ("authenticate with: Authorization: Bearer ..."); someone
 /// using a local MCP server or `serve` signs in with one command instead.
@@ -218,7 +218,7 @@ pub enum Surface {
 /// The origin for a surface, in the forms Firecrawl already uses:
 /// `cli@<version>` for the CLI and `mcp-<client>@<version>` for an MCP
 /// server, where the client is the name the MCP client gave at initialize.
-/// The version is marked `local-` so Firecrawl Local can be told apart from the
+/// The version is marked `local-` so CrawlHub Local can be told apart from the
 /// Node CLI and the hosted MCP server.
 fn origin_for(surface: Surface, client: Option<&str>) -> String {
   let version = concat!("local-", env!("CARGO_PKG_VERSION"));
@@ -249,7 +249,7 @@ fn origin_for(surface: Surface, client: Option<&str>) -> String {
   }
 }
 
-/// Firecrawl cloud's answer to a forwarded request, passed back untouched.
+/// hosted Firecrawl cloud's answer to a forwarded request, passed back untouched.
 pub struct Forwarded {
   pub status: u16,
   pub content_type: Option<String>,
@@ -275,12 +275,8 @@ impl Cloud {
   /// cloud decides what a caller without an account may do.
   pub fn from_env() -> Self {
     let (_, saved_url) = cli_credentials();
-    let api_key = std::env::var("FIRECRAWL_API_KEY")
-      .ok()
-      .filter(|k| !k.trim().is_empty());
-    let base = std::env::var("FIRECRAWL_API_URL")
-      .ok()
-      .filter(|u| !u.trim().is_empty())
+    let api_key = crate::brand::env_api_key();
+    let base = crate::brand::env_api_url()
       .or(saved_url)
       .unwrap_or_else(|| DEFAULT_API_URL.to_string());
     let setting = std::env::var("FIRECRAWL_CLOUD").ok();
@@ -385,7 +381,7 @@ impl Cloud {
     self
   }
 
-  /// Whether a request for `path` may be passed on to Firecrawl cloud.
+  /// Whether a request for `path` may be passed on to hosted Firecrawl cloud.
   pub fn allows(&self, path: &str) -> bool {
     if has_dot_segment(path) {
       return false;
@@ -397,7 +393,7 @@ impl Cloud {
     }
   }
 
-  /// Pass a request Firecrawl Local does not serve itself on to Firecrawl
+  /// Pass a request CrawlHub Local does not serve itself on to Firecrawl
   /// cloud and return the answer. Its own key is used when it has one;
   /// otherwise the caller's, and with neither the call is keyless. A keyless
   /// call that the cloud refuses comes back with the sign-in step added.
@@ -414,7 +410,7 @@ impl Cloud {
     if !self.allows(path) {
       return Err(CloudError {
         status: 400,
-        message: format!("{path} is not a path Firecrawl Local passes on to Firecrawl cloud."),
+        message: format!("{path} is not a path CrawlHub Local passes on to hosted Firecrawl cloud."),
       });
     }
     let origin = match client_origin {
@@ -441,7 +437,7 @@ impl Cloud {
     }
     let resp = req.send().await.map_err(|e| CloudError {
       status: 502,
-      message: format!("Could not reach Firecrawl cloud: {e}"),
+      message: format!("Could not reach hosted Firecrawl cloud: {e}"),
     })?;
     let status = resp.status().as_u16();
     let content_type = resp
@@ -451,7 +447,7 @@ impl Cloud {
       .map(str::to_string);
     let mut body = resp.bytes().await.map_err(|e| CloudError {
       status: 502,
-      message: format!("Firecrawl cloud's answer was cut short: {e}"),
+      message: format!("hosted Firecrawl cloud's answer was cut short: {e}"),
     })?;
     if keyless && matches!(status, 401 | 402 | 403 | 429) {
       if let Some(reworded) = with_sign_in_step(status, &body) {
@@ -497,7 +493,7 @@ impl Cloud {
     }
     let resp = req.send().await.map_err(|e| CloudError {
       status: 502,
-      message: format!("Could not reach Firecrawl cloud: {e}"),
+      message: format!("Could not reach hosted Firecrawl cloud: {e}"),
     })?;
     let status = resp.status().as_u16();
     let payload: Value = resp.json().await.unwrap_or(Value::Null);
@@ -516,12 +512,12 @@ impl Cloud {
             .map(|u| format!(" Or sign up at {u}"))
             .unwrap_or_default();
           let reason = detail.lines().next().unwrap_or("").trim();
-          format!("Firecrawl cloud needs a sign-in for this ({reason}). {SIGN_IN_HINT}{link}")
+          format!("hosted Firecrawl cloud needs a sign-in for this ({reason}). {SIGN_IN_HINT}{link}")
         }
         401 if signed_in => format!(
           "Firecrawl rejected the saved login ({detail}). It may have been rotated or revoked. Run `firecrawl-local login` again, or update FIRECRAWL_API_KEY."
         ),
-        _ => format!("Firecrawl cloud returned {status}: {detail}"),
+        _ => format!("hosted Firecrawl cloud returned {status}: {detail}"),
       };
       return Err(CloudError { status, message });
     }
@@ -534,7 +530,7 @@ impl Cloud {
       return Err(CloudError {
         status: 403,
         message:
-          "Web search runs on Firecrawl cloud, and the cloud is turned off (FIRECRAWL_CLOUD=off)."
+          "Web search runs on hosted Firecrawl cloud, and the cloud is turned off (FIRECRAWL_CLOUD=off)."
             .into(),
       });
     }
@@ -572,7 +568,7 @@ impl Cloud {
     if self.mode == CloudMode::Off {
       return Err(CloudError {
         status: 403,
-        message: "Alexandria data providers run on Firecrawl cloud, and the cloud is turned off (FIRECRAWL_CLOUD=off).".into(),
+        message: "Alexandria data providers run on hosted Firecrawl cloud, and the cloud is turned off (FIRECRAWL_CLOUD=off).".into(),
       });
     }
     if !self.has_key() {
@@ -608,7 +604,7 @@ impl Cloud {
     if self.mode == CloudMode::Off {
       return Err(CloudError {
         status: 403,
-        message: "The Alexandria catalogue lives on Firecrawl cloud, and the cloud is turned off (FIRECRAWL_CLOUD=off).".into(),
+        message: "The Alexandria catalogue lives on hosted Firecrawl cloud, and the cloud is turned off (FIRECRAWL_CLOUD=off).".into(),
       });
     }
     let call = json!([{ "provider": "firecrawl", "capability": "find-tools", "options": options }]);
@@ -686,10 +682,10 @@ fn blocked_warning(status: u16, mode: CloudMode, cloud_refusal: Option<&str>) ->
     "This site did not serve the page to this machine (status {status}), so the content is missing or is a bot check."
   );
   match (cloud_refusal, mode) {
-    (Some(refusal), _) => format!("{lead} Firecrawl cloud did not fetch it either. {refusal}"),
+    (Some(refusal), _) => format!("{lead} hosted Firecrawl cloud did not fetch it either. {refusal}"),
     (None, CloudMode::Fallback) => lead,
     (None, _) => {
-      format!("{lead} Firecrawl cloud can fetch pages like this when FIRECRAWL_CLOUD is auto.")
+      format!("{lead} hosted Firecrawl cloud can fetch pages like this when FIRECRAWL_CLOUD is auto.")
     }
   }
 }
@@ -732,7 +728,7 @@ pub fn looks_like_bot_check(markdown: &str) -> bool {
   .any(|needle| lower.contains(needle))
 }
 
-/// A stand-in for Firecrawl cloud that returns what it was sent.
+/// A stand-in for hosted Firecrawl cloud that returns what it was sent.
 #[cfg(test)]
 pub(crate) async fn echo_cloud() -> String {
   use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -787,7 +783,7 @@ pub(crate) async fn echo_cloud() -> String {
   base
 }
 
-/// A stand-in for Firecrawl cloud that refuses every call the way the
+/// A stand-in for hosted Firecrawl cloud that refuses every call the way the
 /// keyless limit does.
 #[cfg(test)]
 pub(crate) async fn refusing_cloud() -> String {
@@ -1031,7 +1027,7 @@ mod tests {
     let refused = blocked_warning(
       403,
       CloudMode::Fallback,
-      Some("Firecrawl cloud needs a sign-in for this. Run `firecrawl-local login`."),
+      Some("hosted Firecrawl cloud needs a sign-in for this. Run `firecrawl-local login`."),
     );
     assert!(refused.contains("firecrawl-local login"), "{refused}");
     assert!(refused.contains("did not fetch it either"), "{refused}");

@@ -65,6 +65,6 @@ Experience the future of web scraping today:
 
 - **Try FIRE-1:** Integrate intelligent navigation into your scraping and extracting workflows.
 - **Explore the docs:** Learn more in our [comprehensive documentation](https://docs.firecrawl.dev/agents/fire-1).
-- **Need help?** Join our [Discord community](https://discord.gg/S7Enyh9Abh) or email [help@firecrawl.com](mailto:help@firecrawl.com).
+- **Need help?** Email [help@firecrawl.com](mailto:help@firecrawl.com).
 
 **Ready to leverage AI-powered scraping?** [Sign up for Firecrawl](https://firecrawl.dev/signup) and start with FIRE-1 today.

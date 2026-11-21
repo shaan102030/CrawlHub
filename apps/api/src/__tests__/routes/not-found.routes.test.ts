@@ -166,7 +166,7 @@ describe("terminal not-found handler", () => {
 
     const root = await request(app).get("/");
     expect(root.status).toBe(200);
-    expect(root.body.message).toBe("Firecrawl API");
+    expect(root.body.message).toBe("CrawlHub API");
 
     const v0Scrape = await request(app).post("/v0/scrape");
     expect(v0Scrape.status).toBe(200);

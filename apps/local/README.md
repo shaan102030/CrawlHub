@@ -1,13 +1,13 @@
-# Firecrawl Local
+# CrawlHub Local
 
-Firecrawl Local is one binary that scrapes, crawls and maps websites from your own machine. It turns pages into clean markdown, plugs into AI agents as an MCP server, and serves the Firecrawl v2 API on localhost, so code written for Firecrawl runs against it unchanged. There is no database, queue or container to run.
+CrawlHub Local is one binary that scrapes, crawls and maps websites from your own machine. It turns pages into clean markdown, plugs into AI agents as an MCP server, and serves the CrawlHub v2 API on localhost, so code written for CrawlHub runs against it unchanged. There is no database, queue or container to run.
 
-Pages are fetched and cleaned on your machine with the same cleaning code the Firecrawl API uses. Search, pages that refuse your machine, and Alexandria data providers go to [Firecrawl Cloud](#what-runs-where), which you can turn off.
+Pages are fetched and cleaned on your machine with the same cleaning code the CrawlHub API uses. Search, pages that refuse your machine, and Alexandria data providers go to [CrawlHub Cloud](#what-runs-where), which you can turn off.
 
 - [Install](#install)
 - [Quick start](#quick-start)
 - [Add it to your AI agent](#add-it-to-your-ai-agent)
-- [Run the Firecrawl API locally](#run-the-firecrawl-api-locally)
+- [Run the CrawlHub API locally](#run-the-firecrawl-api-locally)
 - [Command reference](#command-reference)
 - [What runs where](#what-runs-where)
 - [Security](#security)
@@ -17,7 +17,7 @@ Pages are fetched and cleaned on your machine with the same cleaning code the Fi
 
 ## Install
 
-You need Rust and a C compiler. On macOS, install the Xcode command line tools with `xcode-select --install`. On Debian and Ubuntu, install `build-essential`. Then install Firecrawl Local from crates.io.
+You need Rust and a C compiler. On macOS, install the Xcode command line tools with `xcode-select --install`. On Debian and Ubuntu, install `build-essential`. Then install CrawlHub Local from crates.io.
 
 ```bash
 cargo install firecrawl-local
@@ -35,7 +35,7 @@ cargo build --release
 
 Two optional extras unlock more of it.
 
-- **Chrome or Chromium.** Firecrawl Local renders pages that need JavaScript in the browser already installed on your machine. Without one, static pages still work and a page that needed a browser comes back with a warning saying so.
+- **Chrome or Chromium.** CrawlHub Local renders pages that need JavaScript in the browser already installed on your machine. Without one, static pages still work and a page that needed a browser comes back with a warning saying so.
 - **Node.js 22 or newer.** The MCP server is the `firecrawl-mcp` npm package, which Firecrawl Local runs through `npx`.
 
 ## Quick start
@@ -58,11 +58,11 @@ List every URL on a site.
 firecrawl-local map https://firecrawl.dev
 ```
 
-Without `--markdown`, `scrape` prints the same JSON the Firecrawl API returns. Ask for more formats with `--format markdown,links` (the choices are `markdown`, `html`, `rawHtml` and `links`). PDFs and Office documents are parsed on your machine too.
+Without `--markdown`, `scrape` prints the same JSON the CrawlHub API returns. Ask for more formats with `--format markdown,links` (the choices are `markdown`, `html`, `rawHtml` and `links`). PDFs and Office documents are parsed on your machine too.
 
 ## Add it to your AI agent
 
-`init` adds Firecrawl Local as an MCP server to every AI tool it finds on your machine.
+`init` adds CrawlHub Local as an MCP server to every AI tool it finds on your machine.
 
 ```bash
 firecrawl-local init
@@ -85,9 +85,9 @@ To add it by hand, register `firecrawl-local mcp` as a stdio MCP server. In a JS
 
 Your agent gets the standard Firecrawl MCP tools. `firecrawl-local mcp` starts the local API on a loopback port and runs the `firecrawl-mcp` package against it, so scrape, crawl, map and batch scrape run on your machine and the other tools go to Firecrawl Cloud.
 
-## Run the Firecrawl API locally
+## Run the CrawlHub API locally
 
-`serve` answers the Firecrawl v2 API on port 3002.
+`serve` answers the CrawlHub v2 API on port 3002.
 
 ```bash
 firecrawl-local serve
@@ -101,19 +101,19 @@ curl -s http://localhost:3002/v2/scrape \
   -d '{"url":"https://example.com","formats":["markdown"]}'
 ```
 
-Point any Firecrawl SDK at it by setting its API URL to `http://localhost:3002`. No API key is needed for local routes.
+Point any CrawlHub SDK at it by setting its API URL to `http://localhost:3002`. No API key is needed for local routes.
 
 ```python
-from firecrawl import Firecrawl
+from firecrawl import CrawlHub
 
-app = Firecrawl(api_url="http://localhost:3002")
+app = CrawlHub(api_url="http://localhost:3002")
 print(app.scrape("https://example.com").markdown)
 ```
 
 ```js
-import { Firecrawl } from "firecrawl";
+import { CrawlHub } from "firecrawl";
 
-const app = new Firecrawl({ apiUrl: "http://localhost:3002" });
+const app = new CrawlHub({ apiUrl: "http://localhost:3002" });
 const doc = await app.scrape("https://example.com");
 console.log(doc.markdown);
 ```
@@ -137,13 +137,13 @@ Every other `/v2` route, such as `/v2/search`, is passed on to Firecrawl Cloud, 
 | `scrape <urls...>` | Scrape one or more URLs | Your machine |
 | `crawl <url>` | Follow links from a start URL | Your machine |
 | `map <url>` | List a site's URLs from its sitemaps and start page | Your machine |
-| `serve` | Run the Firecrawl v2 API on localhost | Your machine |
-| `mcp` | Run the Firecrawl MCP server over stdio | Your machine, other tools on Firecrawl Cloud |
+| `serve` | Run the CrawlHub v2 API on localhost | Your machine |
+| `mcp` | Run the CrawlHub MCP server over stdio | Your machine, other tools on CrawlHub Cloud |
 | `init` | Add the MCP server to the AI tools on this machine | Your machine |
-| `search <query>` | Search the web | Firecrawl Cloud |
-| `find-tools <query>` | Find Alexandria data providers | Firecrawl Cloud, needs sign-in |
-| `data <provider> <capability>` | Run an Alexandria data provider | Firecrawl Cloud, needs sign-in |
-| `login` | Sign in to Firecrawl in the browser | Firecrawl Cloud |
+| `search <query>` | Search the web | CrawlHub Cloud |
+| `find-tools <query>` | Find Alexandria data providers | CrawlHub Cloud, needs sign-in |
+| `data <provider> <capability>` | Run an Alexandria data provider | CrawlHub Cloud, needs sign-in |
+| `login` | Sign in to CrawlHub in the browser | CrawlHub Cloud |
 
 Run `firecrawl-local <command> --help` for every option. The ones you will reach for most are below.
 
@@ -155,17 +155,17 @@ Run `firecrawl-local <command> --help` for every option. The ones you will reach
 
 ## What runs where
 
-Scraping, crawling, mapping and document parsing run on your machine and send nothing to Firecrawl. Three things need Firecrawl Cloud because a laptop does not have the index, the network or the data.
+Scraping, crawling, mapping and document parsing run on your machine and send nothing to CrawlHub. Three things need CrawlHub Cloud because a laptop does not have the index, the network or the data.
 
 | Feature | Why it goes to the cloud | Account needed |
 | --- | --- | --- |
 | Search | There is no search index on your machine | No, keyless search is rate limited |
-| Pages that refuse your machine | When a site blocks both the plain fetch and the local browser, Firecrawl Cloud fetches it | No |
-| Alexandria data providers | The providers run on Firecrawl Cloud | Yes, a free account |
+| Pages that refuse your machine | When a site blocks both the plain fetch and the local browser, CrawlHub Cloud fetches it | No |
+| Alexandria data providers | The providers run on CrawlHub Cloud | Yes, a free account |
 
-A page Firecrawl Cloud fetched for you carries `"source": "firecrawl-cloud"`. If the cloud cannot get it either, the result has `"blocked": true` and a warning that says why. Cloud calls carry a random install ID and the name of the tool that made them, which is how Firecrawl counts installs.
+A page CrawlHub Cloud fetched for you carries `"source": "firecrawl-cloud"`. If the cloud cannot get it either, the result has `"blocked": true` and a warning that says why. Cloud calls carry a random install ID and the name of the tool that made them, which is how CrawlHub counts installs.
 
-To sign in, run `login`. It opens the browser and saves your API key in the same place the Firecrawl CLI keeps it, so either tool's login works for both.
+To sign in, run `login`. It opens the browser and saves your API key in the same place the CrawlHub CLI keeps it, so either tool's login works for both.
 
 ```bash
 firecrawl-local login
@@ -178,10 +178,10 @@ A running `serve` picks up the login straight away, and so do the MCP server's s
 | Value | Effect |
 | --- | --- |
 | `auto` (default) | Search, the blocked-page fallback and Alexandria all work |
-| `search` | Only search goes to Firecrawl Cloud |
-| `off` | Nothing goes to Firecrawl Cloud |
+| `search` | Only search goes to CrawlHub Cloud |
+| `off` | Nothing goes to CrawlHub Cloud |
 
-An unrecognised value counts as `off`. `login` always talks to Firecrawl, because signing in is its job.
+An unrecognised value counts as `off`. `login` always talks to CrawlHub, because signing in is its job.
 
 ## Security
 
@@ -193,9 +193,9 @@ The defaults differ between the tools you run yourself and the API server, becau
 
 An AI agent that reads a page with hidden instructions could be steered into opening an internal URL. If your agent browses sites you do not trust, register the MCP server as `firecrawl-local mcp --public-only`.
 
-The same rules cover the browser. Chrome runs headless and sandboxed with a throwaway profile, behind a loopback proxy inside Firecrawl Local that checks every connection it opens, including redirects, subresources, script requests and WebSockets.
+The same rules cover the browser. Chrome runs headless and sandboxed with a throwaway profile, behind a loopback proxy inside CrawlHub Local that checks every connection it opens, including redirects, subresources, script requests and WebSockets.
 
-Firecrawl Local identifies itself in its User-Agent and reads `robots.txt` when crawling, where site owners can address it as `FirecrawlLocal`.
+CrawlHub Local identifies itself in its User-Agent and reads `robots.txt` when crawling, where site owners can address it as `CrawlHubLocal`.
 
 ### Running in Docker
 
@@ -242,7 +242,7 @@ cd apps/local
 cargo test
 ```
 
-Firecrawl Local compiles the HTML cleaning code in `apps/api/native/src` directly, so a change there changes both the API and Firecrawl Local.
+CrawlHub Local compiles the HTML cleaning code in `apps/api/native/src` directly, so a change there changes both the API and CrawlHub Local.
 
 ### Releases
 

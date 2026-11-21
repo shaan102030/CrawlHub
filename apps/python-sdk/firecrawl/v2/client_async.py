@@ -4,6 +4,8 @@ Async v2 client mirroring the regular client surface using true async HTTP trans
 
 import os
 import asyncio
+
+from ..env import env_api_key
 import time
 from pathlib import Path
 from typing import Optional, List, Dict, Any, Union, Callable, Literal, BinaryIO
@@ -115,7 +117,7 @@ class AsyncFirecrawlClient:
         origin: Optional[str] = None,
     ):
         if api_key is None:
-            api_key = os.getenv("FIRECRAWL_API_KEY")
+            api_key = env_api_key()
         self.http_client = HttpClient(
             api_key,
             api_url,

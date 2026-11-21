@@ -1,4 +1,4 @@
-//! One URL in, one Firecrawl-shaped document out.
+//! One URL in, one CrawlHub API-shaped document out.
 
 use std::{collections::HashMap, sync::Arc, time::Duration};
 

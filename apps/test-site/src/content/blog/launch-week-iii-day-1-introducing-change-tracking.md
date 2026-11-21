@@ -174,6 +174,6 @@ Change Tracking is live in beta for all users:
 
 - **Try it now:** Add `changeTracking` to your scrape or crawl formats.
 - **Learn more:** [Read the docs for `/scrape`](https://docs.firecrawl.dev/features/change-tracking) and [the docs for `/crawl`](https://docs.firecrawl.dev/features/crawl#change-tracking).
-- **Get help:** Join our [Discord community](https://discord.gg/S7Enyh9Abh) or contact [help@firecrawl.com](mailto:help@firecrawl.com).
+- **Get help:** Contact [help@firecrawl.com](mailto:help@firecrawl.com).
 
 **Ready to track detailed content changes?** [Sign up for Firecrawl](https://firecrawl.dev/signup) and start today.
