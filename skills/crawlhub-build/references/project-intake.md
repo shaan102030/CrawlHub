@@ -1,6 +1,6 @@
 # Project Intake
 
-Before implementing Firecrawl in product code, classify the task:
+Before implementing CrawlHub in product code, classify the task:
 
 ## Fresh Project
 
@@ -11,26 +11,26 @@ Default flow:
 1. Confirm the target language or stack.
 2. Install the matching SDK, or use REST if that is a better fit.
 3. Add `FIRECRAWL_API_KEY` to `.env` or the runtime secret store.
-4. Create the smallest useful Firecrawl call for the product.
+4. Create the smallest useful CrawlHub call for the product.
 5. Run the smoke test in [verification.md](verification.md).
 
 ## Existing Project
 
-Use this path when the user wants Firecrawl added to an existing codebase.
+Use this path when the user wants CrawlHub added to an existing codebase.
 
 Inspect the repo first and identify:
 
 - language and framework
 - package manager
 - project structure and file conventions
-- entry points, routes, workers, or jobs where Firecrawl should live
+- entry points, routes, workers, or jobs where CrawlHub should live
 - existing networking or third-party API wrappers
 - how environment variables and secrets are managed
 - any existing scraping, crawling, or browser-automation code
 
 After inspection, ask:
 
-- **What should Firecrawl do in this product?**
+- **What should CrawlHub do in this product?**
 
 Route from that answer:
 

@@ -1,6 +1,6 @@
-# Deploy Firecrawl with Helm
+# Deploy CrawlHub with Helm
 
-Use this chart when you want a repeatable, values-driven Kubernetes render and upgrade workflow. The chart deploys the Firecrawl API, workers, Playwright, Redis, NuQ PostgreSQL, and RabbitMQ, with optional worker types controlled by values.
+Use this chart when you want a repeatable, values-driven Kubernetes render and upgrade workflow. The chart deploys the CrawlHub API, workers, Playwright, Redis, NuQ PostgreSQL, and RabbitMQ, with optional worker types controlled by values.
 
 > [!WARNING]
 > This chart is a source-aligned starting point, not a production guarantee. Its default values use third-party `winkkgmbh` images tagged `latest`, disable resource requests and limits, and do not complete your authentication, persistence, availability, or secret-management design.
@@ -46,7 +46,7 @@ HELM_NO_PLUGINS=1 helm template firecrawl . \
 
 Inspect the rendered images, Secrets, Services, environment variables, storage, and resource settings before applying them.
 
-## Install or upgrade Firecrawl
+## Install or upgrade CrawlHub
 
 ```bash
 HELM_NO_PLUGINS=1 helm upgrade firecrawl . \
@@ -57,7 +57,7 @@ HELM_NO_PLUGINS=1 helm upgrade firecrawl . \
   --create-namespace
 ```
 
-### Use official Firecrawl images on x86
+### Use official CrawlHub images on x86
 
 Override the default repositories:
 
@@ -130,7 +130,7 @@ No values overlay makes these decisions automatically.
 
 ## Build multi-architecture images
 
-Run from `examples/kubernetes/firecrawl-helm` only when you need ARM and x86 images that you control:
+Run from `examples/kubernetes/crawlhub-helm` only when you need ARM and x86 images that you control:
 
 ```bash
 docker buildx create --name multiarch --use --bootstrap

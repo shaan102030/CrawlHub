@@ -73,9 +73,9 @@ final class FirecrawlClient
         // An empty key is allowed: scrape, search, and interact fall back to the
         // keyless free tier (rate-limited per IP). Other methods return 401 from
         // the API until a key is provided.
-        $resolvedKey = trim($apiKey ?: (getenv('FIRECRAWL_API_KEY') ?: ''));
+        $resolvedKey = trim($apiKey ?: (getenv('CRAWLHUB_API_KEY') ?: getenv('FIRECRAWL_API_KEY') ?: ''));
 
-        $resolvedUrl = $apiUrl ?: (getenv('FIRECRAWL_API_URL') ?: self::DEFAULT_API_URL);
+        $resolvedUrl = $apiUrl ?: (getenv('CRAWLHUB_API_URL') ?: getenv('FIRECRAWL_API_URL') ?: self::DEFAULT_API_URL);
 
         if (!preg_match('#^https?://#i', $resolvedUrl)) {
             throw new FirecrawlException(

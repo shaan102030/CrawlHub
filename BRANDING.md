@@ -1,19 +1,31 @@
 # CrawlHub branding
 
-CrawlHub is a fork of [Firecrawl](https://github.com/firecrawl/firecrawl), licensed under the same GNU Affero General Public License v3. Source modifications in this repository are offered as CrawlHub.
+CrawlHub is a fork of [Firecrawl](https://github.com/firecrawl/firecrawl), licensed under the same GNU Affero General Public License v3.
 
-## What is branded as CrawlHub
+## Rebranded in this fork
 
-- Product name and logos in the README, test site, and API root response
-- Logo assets under `img/` and `apps/test-site/`
+| Item | CrawlHub value | Legacy (still works) |
+|------|----------------|----------------------|
+| Product name | **CrawlHub** | — |
+| Local CLI | `crawlhub-local` | `firecrawl-local` (alias) |
+| API key env | `CRAWLHUB_API_KEY` | `FIRECRAWL_API_KEY` |
+| API URL env | `CRAWLHUB_API_URL` | `FIRECRAWL_API_URL` |
+| Docker Compose project | `crawlhub` | — |
+| K8s ConfigMap/Secret names | `crawlhub-config`, `crawlhub-secret` | — |
+| Helm chart path | `examples/kubernetes/crawlhub-helm` | — |
+| PHP package (Composer) | `crawlhub/crawlhub-sdk` | — |
+| Logos | `img/crawlhub_*` | — |
 
-## What stays as Firecrawl (compatibility)
+SDKs (JavaScript, Python, Go, PHP) resolve **CRAWLHUB_*** env vars first, then **FIRECRAWL_***.
 
-To remain compatible with the upstream Firecrawl ecosystem, these identifiers are unchanged:
+## Intentionally unchanged (compatibility)
 
-- NPM/cargo package names (`firecrawl-local`, `@mendable/firecrawl-js`, etc.)
-- Environment variables (`FIRECRAWL_API_KEY`, `FIRECRAWL_API_URL`, …)
-- HTTP headers and Slack command names used by existing integrations
-- Links and copy that refer to [firecrawl.dev](https://firecrawl.dev) cloud services when you choose to use hosted Firecrawl
+These keep upstream names so existing scripts, hosted Firecrawl Cloud, and published NPM/PyPI crates keep working:
 
-You may point a self-hosted deployment at your own domain and customize further in your fork.
+- Crates.io / npm package names (`firecrawl-local` crate name, `@mendable/firecrawl-js`, `firecrawl` PyPI module)
+- Class and type names (`FirecrawlClient`, `FirecrawlApp`, …)
+- Slack slash command `/firecrawl` and HTTP headers `X-Firecrawl-*`
+- Default cloud API host `https://api.firecrawl.dev` when no custom URL is set
+- Internal Rust crate `firecrawl_local` and config keys prefixed with `FIRECRAWL_` in `apps/api`
+
+You can point `CRAWLHUB_API_URL` at your own deployment and customize further in your fork.

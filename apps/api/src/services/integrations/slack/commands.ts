@@ -159,7 +159,7 @@ function monitorHasSearchTarget(monitor: MonitorRow): boolean {
 
 function helpResponse(): SlackCommandResponse {
   const lines = [
-    "*Firecrawl `/monitor` — commands*",
+    "*CrawlHub `/monitor` — commands*",
     "`/monitor watch <url> [prompt]` — monitor a page; add a prompt to alert only on *meaningful* changes",
     "`/monitor watch <prompt>` — monitor the *whole web* for new results matching the prompt",
     "`/monitor list` — list your monitors",
@@ -178,9 +178,9 @@ function helpResponse(): SlackCommandResponse {
 // monitor-specific. Monitoring lives under `/monitor`.
 function firecrawlHelpResponse(): SlackCommandResponse {
   const lines = [
-    "*Firecrawl `/firecrawl` — commands*",
+    "*CrawlHub `/firecrawl` — commands*",
     "`/firecrawl account` — credits, plan usage, and concurrency",
-    "`/firecrawl status` — this workspace's Firecrawl connection",
+    "`/firecrawl status` — this workspace's CrawlHub connection",
     "`/firecrawl help` — show this",
     "",
     "Monitoring lives under `/monitor` — try `/monitor help`.",
@@ -217,7 +217,7 @@ function statusResponse(
   const workspace = installation.slack_team_name ?? installation.slack_team_id;
   return ephemeral(
     [
-      `:white_check_mark: This Slack workspace (*${escapeSlackText(workspace)}*) is linked to your Firecrawl account.`,
+      `:white_check_mark: This Slack workspace (*${escapeSlackText(workspace)}*) is linked to your CrawlHub account.`,
       "Monitors created here bill your team's API key automatically — no key to paste.",
       `Open the ${slackLink(dashboardUrl("/app/monitoring"), "monitoring dashboard")} to configure more.`,
     ].join("\n"),
@@ -418,7 +418,7 @@ function watchFooter(monitorId: string): string[] {
       dashboardUrl(`/app/monitoring/${monitorId}`),
       "dashboard",
     )} (\`${monitorId}\`).`,
-    `_Tip: if you don't see alerts in a private channel, invite the bot with \`/invite @Firecrawl\`._`,
+    `_Tip: if you don't see alerts in a private channel, invite the bot with \`/invite @CrawlHub\`._`,
   ];
 }
 
@@ -509,7 +509,7 @@ async function accountResponse(
     getCombinedTeamActiveCount(teamId).catch(() => null),
   ]);
 
-  const lines: string[] = [":bar_chart: *Your Firecrawl account*"];
+  const lines: string[] = [":bar_chart: *Your CrawlHub account*"];
 
   if (balance) {
     if (balance.unlimited) {

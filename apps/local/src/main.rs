@@ -21,9 +21,10 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 #[derive(Parser)]
 #[command(
-  name = "firecrawl-local",
+  name = "crawlhub-local",
+  visible_alias = "firecrawl-local",
   version,
-  about = "Scrape, crawl and map the web from your own machine."
+  about = "CrawlHub: scrape, crawl and map the web from your own machine."
 )]
 struct Cli {
   /// When to use the local Chrome for JavaScript pages: auto, never or always.
@@ -40,7 +41,7 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
-  /// Scrape one or more URLs and print Firecrawl-shaped JSON.
+  /// Scrape one or more URLs and print CrawlHub API-shaped JSON.
   Scrape {
     /// One or more URLs.
     #[arg(required = true)]
@@ -107,20 +108,20 @@ enum Command {
     #[arg(long, short = 'l', default_value_t = 5000)]
     limit: usize,
   },
-  /// Search the web through Firecrawl cloud.
+  /// Search the web through hosted Firecrawl cloud.
   Search {
     query: String,
     #[arg(long, short = 'l', default_value_t = 5)]
     limit: u32,
   },
-  /// Find Alexandria data providers on Firecrawl cloud.
+  /// Find Alexandria data providers on hosted Firecrawl cloud.
   FindTools {
     /// What data you need, in plain words.
     query: String,
     #[arg(long, short = 'l', default_value_t = 10)]
     limit: u32,
   },
-  /// Run an Alexandria data provider on Firecrawl cloud.
+  /// Run an Alexandria data provider on hosted Firecrawl cloud.
   Data {
     provider: String,
     capability: String,
@@ -177,11 +178,11 @@ enum Command {
 /// API on a loopback port the system picks, then runs that server pointed at
 /// it, with this process's stdin and stdout handed straight through. Scrape,
 /// crawl and map are answered here; everything else the server offers is
-/// passed on to Firecrawl cloud.
+/// passed on to hosted Firecrawl cloud.
 async fn launch_mcp(engine: Arc<Engine>) -> Result<(), String> {
   let listener = tokio::net::TcpListener::bind((std::net::Ipv4Addr::LOCALHOST, 0))
     .await
-    .map_err(|e| format!("could not open a local port for Firecrawl Local: {e}"))?;
+    .map_err(|e| format!("could not open a local port for CrawlHub Local: {e}"))?;
   let addr = listener
     .local_addr()
     .map_err(|e| format!("could not read the local port: {e}"))?;
@@ -618,12 +619,12 @@ async fn run(cli: Cli) -> ExitCode {
       println!();
       println!("Use it from any app:");
       println!(
-        "  {} serve            # Firecrawl API on http://127.0.0.1:3002",
+        "  {} serve            # CrawlHub API on http://127.0.0.1:3002",
         binary.display()
       );
-      println!("  FIRECRAWL_API_URL=http://127.0.0.1:3002   # then your existing Firecrawl SDK code runs locally");
+      println!("  CRAWLHUB_API_URL=http://127.0.0.1:3002   # or FIRECRAWL_API_URL — existing SDK code runs locally");
       println!();
-      println!("What goes to Firecrawl cloud:");
+      println!("What goes to hosted Firecrawl cloud:");
       println!("  - your search queries (there is no search index on a laptop)");
       println!(
         "  - the URL of a page that blocked this machine, so Firecrawl can fetch it for you"
@@ -633,7 +634,7 @@ async fn run(cli: Cli) -> ExitCode {
       println!(
         "Pages that load fine here are never sent. FIRECRAWL_CLOUD=search keeps only search;"
       );
-      println!("FIRECRAWL_CLOUD=off turns the cloud off. FIRECRAWL_API_KEY uses your account.");
+      println!("FIRECRAWL_CLOUD=off turns the cloud off. CRAWLHUB_API_KEY or FIRECRAWL_API_KEY uses your account.");
       ExitCode::SUCCESS
     }
     Command::Serve {

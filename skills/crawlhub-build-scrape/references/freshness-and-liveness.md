@@ -8,11 +8,11 @@ Two separate questions. Keep them separate in code:
 
 ## `maxAge` and the Cache Tradeoff
 
-Firecrawl reuses recently indexed content, which is what makes repeat reads of
+CrawlHub reuses recently indexed content, which is what makes repeat reads of
 the same URL fast and cheap. `maxAge` is the maximum age, in milliseconds, of an
 indexed copy that `/scrape` may return.
 
-- Omit `maxAge` and Firecrawl chooses the window itself, tuning it per domain.
+- Omit `maxAge` and CrawlHub chooses the window itself, tuning it per domain.
   This is the right default for most reads.
 - Set `maxAge` explicitly when the feature has a real staleness bound.
 - `maxAge: 0` skips index reuse and takes the live scrape path. It costs
@@ -39,7 +39,7 @@ From `/scrape` response metadata:
 
 ## Deciding Liveness
 
-Firecrawl supplies page evidence; your application interprets it in its own
+CrawlHub supplies page evidence; your application interprets it in its own
 terms. `200` plus non-empty content means the fetch succeeded, not that the item
 described by the page is still active — plenty of sites serve a full page for a
 removed record.

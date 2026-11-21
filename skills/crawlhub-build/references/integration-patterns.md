@@ -4,7 +4,7 @@ These patterns describe when to use each endpoint. For request/response
 schemas, parameters, and SDK examples, read the source-of-truth page for
 your project language at https://docs.firecrawl.dev/agent-source-of-truth/
 
-Firecrawl integrations usually fall into one of these shapes:
+CrawlHub integrations usually fall into one of these shapes:
 
 ## Known URL -> extract content
 

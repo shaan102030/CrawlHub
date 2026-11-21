@@ -1,12 +1,12 @@
 # Project Setup
 
-For hosted Firecrawl, add this to `.env`:
+For hosted CrawlHub, add this to `.env`:
 
 ```dotenv
 FIRECRAWL_API_KEY=fc-...
 ```
 
-For self-hosted Firecrawl, add:
+For self-hosted CrawlHub, add:
 
 ```dotenv
 FIRECRAWL_API_KEY=fc-...

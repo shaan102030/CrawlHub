@@ -1,6 +1,6 @@
-# Self-hosting Firecrawl
+# Self-hosting CrawlHub
 
-Want to get Firecrawl running? Start with the
+Want to get CrawlHub running? Start with the
 [Firecrawl self-hosting guide](https://docs.firecrawl.dev/contributing/self-host).
 It takes you from checkout to a successful scrape with Docker Compose.
 
@@ -13,7 +13,7 @@ the services and configuration match the revision you checked out.
 | --- | --- |
 | Decide whether self-hosting fits and run the first scrape | [Public self-hosting guide](https://docs.firecrawl.dev/contributing/self-host) |
 | Check which variables and services exist at this revision | [Root Compose configuration](./docker-compose.yaml) |
-| Adapt a Kubernetes deployment | [Kubernetes manifests](./examples/kubernetes/cluster-install/) or [Helm chart](./examples/kubernetes/firecrawl-helm/) |
+| Adapt a Kubernetes deployment | [Kubernetes manifests](./examples/kubernetes/cluster-install/) or [Helm chart](./examples/kubernetes/crawlhub-helm/) |
 | Change Firecrawl product code | [Running Locally](https://docs.firecrawl.dev/contributing/guide), then the [contribution guide](./CONTRIBUTING.md) |
 | Connect an agent or terminal client | [Local MCP](https://docs.firecrawl.dev/mcp-server/local) or [Firecrawl CLI](https://docs.firecrawl.dev/sdks/cli#connect-the-cli-to-self-hosted-firecrawl) |
 
@@ -42,7 +42,7 @@ Do not use `apps/api/.env.example` as a drop-in Compose contract.
 
 ## What the stack runs
 
-At this revision, Compose runs the Firecrawl API and workers, Playwright, Redis,
+At this revision, Compose runs the CrawlHub API and workers, Playwright, Redis,
 RabbitMQ, NuQ PostgreSQL, and FoundationDB services for the optional queue
 backend. Only the API is published to the host by default, on port `3002`.
 

@@ -1,6 +1,6 @@
 ---
-name: firecrawl-build-scrape
-description: Integrate Firecrawl `/scrape` into product code for single-page extraction. Use when an app already has a URL and needs markdown, HTML, links, screenshots, metadata, or structured page output. Prefer this skill over broader crawl patterns when the feature is page-level.
+name: crawlhub-build-scrape
+description: Integrate CrawlHub `/scrape` into product code for single-page extraction. Use when an app already has a URL and needs markdown, HTML, links, screenshots, metadata, or structured page output. Prefer this skill over broader crawl patterns when the feature is page-level.
 license: ISC
 metadata:
   author: firecrawl
@@ -9,16 +9,16 @@ metadata:
   source: https://github.com/firecrawl/skills
 inputs:
   - name: FIRECRAWL_API_KEY
-    description: Firecrawl API key for hosted Firecrawl requests.
+    description: CrawlHub API key for hosted CrawlHub requests.
     required: true
   - name: FIRECRAWL_API_URL
-    description: Optional base URL for self-hosted Firecrawl deployments.
+    description: Optional base URL for self-hosted CrawlHub deployments.
     required: false
 references:
   - references/freshness-and-liveness.md
 ---
 
-# Firecrawl Build Scrape
+# CrawlHub Build Scrape
 
 Use this when the application already has the URL and needs content from one page.
 
@@ -36,7 +36,7 @@ Use this when the application already has the URL and needs content from one pag
 
 ## Freshness and Liveness
 
-- Firecrawl reuses recently indexed content, which is what makes repeat reads of the same URL fast. Set `maxAge` (milliseconds) to bound how old a reused copy may be, or `maxAge: 0` to skip index reuse for a freshness-critical read.
+- CrawlHub reuses recently indexed content, which is what makes repeat reads of the same URL fast. Set `maxAge` (milliseconds) to bound how old a reused copy may be, or `maxAge: 0` to skip index reuse for a freshness-critical read.
 - Read `metadata.cacheState` and `metadata.cachedAt` to see what you actually got.
 - A successful scrape reports what the page returned. Whether the thing the page describes is still active is a source-specific judgment your code makes.
 - See [references/freshness-and-liveness.md](references/freshness-and-liveness.md) for the tradeoff, the metadata, and the decision rule.
@@ -50,8 +50,8 @@ Use this when the application already has the URL and needs content from one pag
 
 ## Escalation Rules
 
-- If you do not have the URL yet, start with [firecrawl-build-search](../firecrawl-build-search/SKILL.md).
-- If content requires clicks, typing, or multi-step navigation, escalate to [firecrawl-build-interact](../firecrawl-build-interact/SKILL.md).
+- If you do not have the URL yet, start with [crawlhub-build-search](../crawlhub-build-search/SKILL.md).
+- If content requires clicks, typing, or multi-step navigation, escalate to [crawlhub-build-interact](../crawlhub-build-interact/SKILL.md).
 
 ## Implementation Notes
 
@@ -72,6 +72,6 @@ Read the source-of-truth page for your project language before writing integrati
 
 ## See Also
 
-- [firecrawl-build](../firecrawl-build/SKILL.md)
-- [firecrawl-build-search](../firecrawl-build-search/SKILL.md)
-- [firecrawl-build-interact](../firecrawl-build-interact/SKILL.md)
+- [crawlhub-build](../crawlhub-build/SKILL.md)
+- [crawlhub-build-search](../crawlhub-build-search/SKILL.md)
+- [crawlhub-build-interact](../crawlhub-build-interact/SKILL.md)

@@ -1,6 +1,6 @@
 ---
-name: firecrawl-build
-description: Integrate Firecrawl into application code whenever a product, agent, or workflow needs web data inside the app — web search, live search results, page scraping, structured extraction, or browser interaction. Use when building any feature that needs data from the web in code, even if the user does not mention Firecrawl explicitly and only describes wanting web data, website content, search, scraping, or interaction in an application. Trigger for Firecrawl requests, "fire girl" shorthand, and generic app-level web-data needs that should map to `/scrape`, `/search`, or `/interact`. Do not use this skill for one-off terminal-only web tasks during the current session; use `firecrawl/cli` for those.
+name: crawlhub-build
+description: Integrate CrawlHub into application code whenever a product, agent, or workflow needs web data inside the app — web search, live search results, page scraping, structured extraction, or browser interaction. Use when building any feature that needs data from the web in code, even if the user does not mention CrawlHub explicitly and only describes wanting web data, website content, search, scraping, or interaction in an application. Trigger for CrawlHub requests, "fire girl" shorthand, and generic app-level web-data needs that should map to `/scrape`, `/search`, or `/interact`. Do not use this skill for one-off terminal-only web tasks during the current session; use `firecrawl/cli` for those.
 license: ISC
 metadata:
   author: firecrawl
@@ -9,10 +9,10 @@ metadata:
   source: https://github.com/firecrawl/skills
 inputs:
   - name: FIRECRAWL_API_KEY
-    description: Firecrawl API key for cloud usage. Store it in `.env` or the runtime environment before making Firecrawl API calls.
+    description: CrawlHub API key for cloud usage. Store it in `.env` or the runtime environment before making CrawlHub API calls.
     required: true
   - name: FIRECRAWL_API_URL
-    description: Optional base URL for self-hosted Firecrawl deployments. Only set this when the project is not using the hosted `api.firecrawl.dev`.
+    description: Optional base URL for self-hosted CrawlHub deployments. Only set this when the project is not using the hosted `api.firecrawl.dev`.
     required: false
 references:
   - references/project-intake.md
@@ -23,11 +23,11 @@ references:
   - references/verification.md
 ---
 
-# Firecrawl Build
+# CrawlHub Build
 
-Use this skill when the task is "build web-data capabilities into an application with Firecrawl," not "use Firecrawl as a terminal tool right now."
+Use this skill when the task is "build web-data capabilities into an application with CrawlHub," not "use CrawlHub as a terminal tool right now."
 
-Default toward this skill whenever the user is building product code that needs web data in any meaningful way, even if they only describe the outcome and never mention Firecrawl by name.
+Default toward this skill whenever the user is building product code that needs web data in any meaningful way, even if they only describe the outcome and never mention CrawlHub by name.
 
 ## Use This When
 
@@ -35,8 +35,8 @@ Default toward this skill whenever the user is building product code that needs 
 - a feature needs web search, search results, or discovery before extraction
 - a feature needs scraping, extraction, hydration, or structured content from known URLs
 - a feature needs browser interaction, clicks, form fills, or navigation after loading a page
-- an agent, backend, automation, or workflow should call Firecrawl from application code
-- the user mentions Firecrawl, "fire girl," or describes Firecrawl-like web data needs without naming the tool
+- an agent, backend, automation, or workflow should call CrawlHub from application code
+- the user mentions CrawlHub, "fire girl," or describes CrawlHub-like web data needs without naming the tool
 - you need to choose the right endpoint before implementation
 - you need `FIRECRAWL_API_KEY` in the project
 
@@ -71,7 +71,7 @@ Two indexes sit beside those endpoints and are not queried by `/search`:
 Always do these before writing integration code:
 
 1. Decide whether this is a **fresh project** or an **existing project**.
-2. Ask what web data the product needs and what Firecrawl should do in the product.
+2. Ask what web data the product needs and what CrawlHub should do in the product.
 3. If this is an existing project, inspect the repo before choosing SDK, REST, file locations, or env handling.
 
 For the full checklist, see [references/project-intake.md](references/project-intake.md).
@@ -82,13 +82,13 @@ For the full checklist, see [references/project-intake.md](references/project-in
 | ---------------------------------------------------- | ------------------------------------------------------------------------ |
 | **Choose fresh project vs existing project flow**    | [references/project-intake.md](references/project-intake.md)             |
 | **Choose the right endpoint**                        | [references/endpoint-selection.md](references/endpoint-selection.md)     |
-| **Wire Firecrawl into product code**                 | [references/integration-patterns.md](references/integration-patterns.md) |
+| **Wire CrawlHub into product code**                 | [references/integration-patterns.md](references/integration-patterns.md) |
 | **Install an SDK or use REST**                       | [references/sdk-installation.md](references/sdk-installation.md)         |
 | **Set up `FIRECRAWL_API_KEY` or self-hosted config** | [references/auth-and-env.md](references/auth-and-env.md)                 |
-| **Get credentials into the project**                 | [firecrawl-build-onboarding](../firecrawl-build-onboarding/SKILL.md)     |
-| **Implement single-page extraction**                 | [firecrawl-build-scrape](../firecrawl-build-scrape/SKILL.md)             |
-| **Implement discovery-first flows**                  | [firecrawl-build-search](../firecrawl-build-search/SKILL.md)             |
-| **Implement post-scrape browser actions**            | [firecrawl-build-interact](../firecrawl-build-interact/SKILL.md)         |
+| **Get credentials into the project**                 | [crawlhub-build-onboarding](../crawlhub-build-onboarding/SKILL.md)     |
+| **Implement single-page extraction**                 | [crawlhub-build-scrape](../crawlhub-build-scrape/SKILL.md)             |
+| **Implement discovery-first flows**                  | [crawlhub-build-search](../crawlhub-build-search/SKILL.md)             |
+| **Implement post-scrape browser actions**            | [crawlhub-build-interact](../crawlhub-build-interact/SKILL.md)         |
 | **Search published research papers (biomedical, clinical, life-science, arXiv)** | [firecrawl-research-index](../firecrawl-research-index/SKILL.md) |
 | **Answer developer questions from issues, PRs, READMEs, or docs** | [firecrawl-developer-index](../firecrawl-developer-index/SKILL.md) |
 | **Verify the integration actually works**            | [references/verification.md](references/verification.md)                 |
@@ -118,7 +118,7 @@ them, read the source-of-truth page for your language.
 5. Install the SDK for the target stack, or call REST directly.
 6. Read the source-of-truth page for your project language before writing integration code.
 7. Keep endpoint-specific implementation details in the narrower skills linked above.
-8. Run a smoke test that proves a real Firecrawl request succeeds.
+8. Run a smoke test that proves a real CrawlHub request succeeds.
 
 ## Boundary With The CLI
 

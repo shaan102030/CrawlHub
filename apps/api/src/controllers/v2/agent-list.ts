@@ -134,7 +134,7 @@ export async function agentListController(
     return res.status(501).json({
       success: false,
       error:
-        "This endpoint is only available if your Firecrawl deployment is backed by a database.",
+        "This endpoint is only available if your CrawlHub deployment is backed by a database.",
     });
   }
 

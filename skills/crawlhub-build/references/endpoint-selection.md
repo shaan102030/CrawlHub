@@ -2,7 +2,7 @@
 
 Ask this before picking an endpoint:
 
-- **What should Firecrawl do in the product?**
+- **What should CrawlHub do in the product?**
 
 Use the narrowest endpoint that matches the feature:
 
@@ -25,7 +25,7 @@ Escalation rules:
 
 ## Beyond The Three Endpoints
 
-Two Firecrawl indexes sit beside `/scrape`, `/search`, and `/interact`. Neither is queried by `/search`:
+Two CrawlHub indexes sit beside `/scrape`, `/search`, and `/interact`. Neither is queried by `/search`:
 
 | Index | Use when | Reached by |
 |---|---|---|

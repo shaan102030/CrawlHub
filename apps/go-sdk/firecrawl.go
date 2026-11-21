@@ -55,7 +55,7 @@ func NewClient(opts ...option.RequestOption) (*Client, error) {
 	// Resolve API key.
 	apiKey := strings.TrimSpace(cfg.APIKey)
 	if apiKey == "" {
-		apiKey = strings.TrimSpace(os.Getenv("FIRECRAWL_API_KEY"))
+		apiKey = envAPIKey()
 	}
 	// An empty API key is allowed: scrape, search, and interact fall back to the
 	// keyless free tier (rate-limited per IP). Other methods return 401 from the
@@ -64,7 +64,7 @@ func NewClient(opts ...option.RequestOption) (*Client, error) {
 	// Resolve API URL.
 	apiURL := cfg.APIURL
 	if apiURL == "" {
-		apiURL = os.Getenv("FIRECRAWL_API_URL")
+		apiURL = envAPIURL()
 	}
 	if apiURL == "" {
 		apiURL = defaultAPIURL

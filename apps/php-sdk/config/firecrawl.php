@@ -5,14 +5,13 @@ declare(strict_types=1);
 return [
     /*
     |--------------------------------------------------------------------------
-    | Firecrawl API Key
+    | CrawlHub / Firecrawl API Key
     |--------------------------------------------------------------------------
     |
-    | Your Firecrawl API key. Get one at https://firecrawl.dev.
-    | Falls back to the FIRECRAWL_API_KEY environment variable.
+    | Your API key. Prefers CRAWLHUB_API_KEY, then FIRECRAWL_API_KEY.
     |
     */
-    'api_key' => env('FIRECRAWL_API_KEY'),
+    'api_key' => env('CRAWLHUB_API_KEY', env('FIRECRAWL_API_KEY')),
 
     /*
     |--------------------------------------------------------------------------
@@ -23,7 +22,7 @@ return [
     | Falls back to the FIRECRAWL_API_URL environment variable or the default.
     |
     */
-    'api_url' => env('FIRECRAWL_API_URL', 'https://api.firecrawl.dev'),
+    'api_url' => env('CRAWLHUB_API_URL', env('FIRECRAWL_API_URL', 'https://api.firecrawl.dev')),
 
     /*
     |--------------------------------------------------------------------------
