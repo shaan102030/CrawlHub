@@ -433,7 +433,7 @@ describeIf(TEST_PRODUCTION)("Zero Data Retention", () => {
           identity,
         );
 
-        expect(response.product?.title).toBe("Firecrawl Test Widget");
+        expect(response.product?.title).toBe("CrawlHub Test Widget");
       },
       scrapeTimeout,
     );

@@ -1,6 +1,6 @@
-# Contributing to Firecrawl
+# Contributing to CrawlHub
 
-Thanks for helping make Firecrawl better. Keep each change focused, prove the behavior you changed, and make the pull request easy to review.
+This repository is a fork of Firecrawl. Thanks for helping make CrawlHub better. Keep each change focused, prove the behavior you changed, and make the pull request easy to review.
 
 ## Choose the right workflow
 

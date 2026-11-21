@@ -1,8 +1,9 @@
 <h3 align="center">
   <a name="readme-top"></a>
   <img
-    src="https://raw.githubusercontent.com/firecrawl/firecrawl/main/img/firecrawl_logo.png"
+    src="./img/crawlhub_logo.png"
     height="200"
+    alt="CrawlHub logo"
   >
 </h3>
 
@@ -37,9 +38,11 @@
 
 ---
 
-# **🔥 Firecrawl**
+# **CrawlHub**
 
-**Knowledge infrastructure to make your agents smarter. 🔥** You can use Firecrawl three ways. This repo holds the code for Firecrawl Local and the self-hosted server, along with SDKs that work with all three.
+**Self-hosted knowledge infrastructure for your agents.** CrawlHub is a fork of [Firecrawl](https://github.com/firecrawl/firecrawl) (AGPL-3.0). See [BRANDING.md](./BRANDING.md) for what is rebranded versus what stays compatible with the upstream Firecrawl ecosystem (package names, `FIRECRAWL_*` env vars, and SDKs).
+
+You can run CrawlHub three ways. This repo holds the code for Firecrawl Local and the self-hosted server, along with SDKs that work with all three.
 
 - **[Firecrawl Local](#firecrawl-local).** Run Firecrawl on your own machine as one binary that turns websites into clean markdown, plugs into your AI agent as an MCP server and serves the Firecrawl API on localhost.
 - **[Firecrawl Cloud](#firecrawl-cloud).** Use the hosted service at [firecrawl.dev](https://firecrawl.dev/?ref=github) for everything Local does at scale with nothing to run, plus search and the 550+ data providers in [Firecrawl Alexandria](https://alexandria.firecrawl.dev) for far more knowledge than scraping alone.

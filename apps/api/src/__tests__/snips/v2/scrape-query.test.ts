@@ -73,7 +73,7 @@ describe("Query format", () => {
           formats: [
             {
               type: "query",
-              prompt: "What is the price of the Firecrawl Test Widget?",
+              prompt: "What is the price of the CrawlHub Test Widget?",
             },
           ],
         },
