@@ -137,7 +137,7 @@ if (!config.BULL_AUTH_KEY) {
 
 app.get("/", (_, res) => {
   res.json({
-    message: "Firecrawl API",
+    message: "CrawlHub API",
     documentation_url: "https://docs.firecrawl.dev",
   });
 });

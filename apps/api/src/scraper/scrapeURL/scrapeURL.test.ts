@@ -139,15 +139,15 @@ describe("Standalone scrapeURL tests", () => {
         expect(out.document).toHaveProperty("markdown");
         expect(out.document).toHaveProperty("metadata");
         expect(out.document).not.toHaveProperty("html");
-        expect(out.document.markdown).toContain("Firecrawl Test Site");
+        expect(out.document.markdown).toContain("CrawlHub Test Site");
         expect(out.document.metadata.error).toBeUndefined();
-        expect(out.document.metadata.title).toBe("Firecrawl Test Website");
+        expect(out.document.metadata.title).toBe("CrawlHub Test Website");
         expect(out.document.metadata.description).toBe(
-          "Welcome to the Firecrawl Test Website!",
+          "Welcome to the CrawlHub Test Website!",
         );
-        expect(out.document.metadata.ogTitle).toBe("Firecrawl Test Website");
+        expect(out.document.metadata.ogTitle).toBe("CrawlHub Test Website");
         expect(out.document.metadata.ogDescription).toBe(
-          "Welcome to the Firecrawl Test Website!",
+          "Welcome to the CrawlHub Test Website!",
         );
         expect(out.document.metadata.ogUrl).toContain("firecrawl-test-site");
         expect(out.document.metadata.ogImage).toContain("firecrawl-test-site");
@@ -177,7 +177,7 @@ describe("Standalone scrapeURL tests", () => {
         expect(out.document).toHaveProperty("markdown");
         expect(out.document).toHaveProperty("html");
         expect(out.document).toHaveProperty("metadata");
-        expect(out.document.markdown).toContain("Firecrawl Test Site");
+        expect(out.document.markdown).toContain("CrawlHub Test Site");
         expect(out.document.html).toContain("<h1");
         expect(out.document.metadata.statusCode).toBe(200);
         expect(out.document.metadata.error).toBeUndefined();
